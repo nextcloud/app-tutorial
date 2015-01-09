@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<info>
+    <id>ownnotes</id>
+    <name>Own Notes</name>
+    <description>My first ownCloud app</description>
+    <licence>AGPL</licence>
+    <author>ray</author>
+    <version>0.0.2</version>
+    <namespace>OwnNotes</namespace>
+    <category>other</category>
+    <dependencies>
+        <owncloud min-version="8" />
+    </dependencies>
+</info>
