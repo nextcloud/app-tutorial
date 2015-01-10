@@ -19,7 +19,7 @@ install:
   - cd owncloud
   - ocdev ci $DB
   # enable ownnotes
-  - mv tutorial owncloud/apps/ownnotes
+  - mv app-tutorial owncloud/apps/ownnotes
   - php -f console.php app:enable ownnotes
 
 before_script:
