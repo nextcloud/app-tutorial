@@ -14,30 +14,14 @@ namespace OCA\OwnNotes\Controller;
 use PHPUnit_Framework_TestCase;
 
 use OCP\AppFramework\Http\TemplateResponse;
-use OCP\AppFramework\App;
 
 class PageControllerTest extends PHPUnit_Framework_TestCase {
 
-	private $request;
 	private $controller;
-	private $userId = 'john';
 
 	public function setUp() {
-		$app = new App('ownnotes');
-		$container = $app->getContainer();
-
-		$this->request = $this->getMockBuilder('OCP\IRequest')->getMock();
-		$container->registerService('OCP\IRequest', function($c) {
-			return $this->request;
-		});
-
-		$container->registerService('UserId', function($c) {
-			return $this->userId;
-		});
-
-		$this->controller = $container->query(
-			'OCA\OwnNotes\Controller\PageController'
-		);
+		$request = $this->getMockBuilder('OCP\IRequest')->getMock();
+		$this->controller = new PageController('ownnotes', $request);
 	}
 
 
