@@ -1,6 +1,6 @@
 # Tutorial
 
-[![Build Status](https://travis-ci.org/owncloud/news.svg?branch=master)](https://travis-ci.org/owncloud/tutorial)
+[![Build Status](https://travis-ci.org/owncloud/news.svg?branch=master)](https://travis-ci.org/owncloud/app-tutorial)
 
 This is the tutorial app. To install it change into your ownCloud's apps directory:
 
@@ -8,7 +8,7 @@ This is the tutorial app. To install it change into your ownCloud's apps directo
 
 Then run:
 
-    git clone --branch stable8 https://github.com/owncloud/tutorial.git ownnotes
+    git clone --branch stable8 https://github.com/owncloud/app-tutorial.git ownnotes
 
 where the branch parameter is the ownCloud version that you are targeting:
 
