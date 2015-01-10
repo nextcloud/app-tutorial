@@ -1,2 +1,2 @@
-owncloud-ownnotes (0.0.1)
+owncloud-ownnotes (0.0.2)
 * First release

@@ -1,4 +1,4 @@
 # Authors
 
-* ray: <ray>
+* Bernhard Posselt: <dev@bernhard-posselt.com>
 
