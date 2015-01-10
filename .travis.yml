@@ -1,14 +1,14 @@
 language: php
 php:
   - 5.4
-  #- 5.5
-  #- 5.6
-  #- hhvm
+  - 5.5
+  - 5.6
+  - hhvm
 
 env:
   - DB=sqlite BRANCH=master
-  #- DB=postgresql BRANCH=master
-  #- DB=mysql BRANCH=master
+  - DB=postgresql BRANCH=master
+  - DB=mysql BRANCH=master
   
 matrix:
   allow_failures:
