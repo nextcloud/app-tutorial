@@ -17,7 +17,6 @@ install:
   - cd ..
   - ocdev setup core --dir owncloud --branch $BRANCH
   - cd owncloud
-  - mkdir apps2
   - ocdev ci $DB
   # enable ownnotes
   - mv tutorial core/apps/ownnotes
