@@ -6,8 +6,8 @@ php:
   - hhvm
 
 env:
-    - DB=sqlite BRANCH master
-    - DB=sqlite BRANCH stable8
+    - DB=sqlite BRANCH=master
+    - DB=sqlite BRANCH=stable8
 
 matrix:
   allow_failures:
