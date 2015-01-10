@@ -28,3 +28,4 @@ before_script:
 script:
   - phpunit -c phpunit.xml
   - phpunit -c phpunit.integration.xml
+  
