@@ -1,4 +1,7 @@
 # Tutorial
+
+[![Build Status](https://travis-ci.org/owncloud/news.svg?branch=master)](https://travis-ci.org/owncloud/tutorial)
+
 This is the tutorial app. To install it change into your ownCloud's apps directory:
 
     cd owncloud/apps
