@@ -19,6 +19,7 @@ install:
   - cd owncloud
   - mkdir apps2
   - ocdev ci $DB
+  # enable ownnotes
   - mv tutorial core/apps/ownnotes
   - php -f console.php app:enable ownnotes
 
