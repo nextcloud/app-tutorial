@@ -17,7 +17,7 @@ matrix:
 install:
   # install ocdev
   - sudo apt-get -y install python3-jinja2 python3-setuptools 
-  - sudo pip3 install ocdev
+  - sudo pip3-2 install ocdev
   # set up postgresql
   - createuser -U travis -s oc_autotest
   # set up mysql
