@@ -2,16 +2,23 @@
 namespace OCA\OwnNotes\Controller;
 
 use OCP\IRequest;
+use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\ApiController;
 
+use OCA\OwnNotes\Service\NoteService;
 
 class NoteApiController extends ApiController {
 
-    private $controller;
+    private $service;
+    private $userId;
 
-    public function __construct($AppName, IRequest $request, NoteController $controller) {
+    use Errors;
+
+    public function __construct($AppName, IRequest $request,
+                                NoteService $service, $UserId){
         parent::__construct($AppName, $request);
-        $this->controller = $controller;
+        $this->service = $service;
+        $this->userId = $UserId;
     }
 
     /**
@@ -20,7 +27,7 @@ class NoteApiController extends ApiController {
      * @NoAdminRequired
      */
     public function index() {
-        return $this->controller->index();
+        return new DataResponse($this->service->findAll($this->userId));
     }
 
     /**
@@ -31,7 +38,9 @@ class NoteApiController extends ApiController {
      * @param int $id
      */
     public function show($id) {
-        return $this->controller->show($id);
+        return $this->handleNotFound(function () use ($id) {
+            return $this->service->find($id, $this->userId);
+        });
     }
 
     /**
@@ -43,7 +52,9 @@ class NoteApiController extends ApiController {
      * @param string $content
      */
     public function create($title, $content) {
-        return $this->controller->create($title, $content);
+        return $this->handleNotFound(function () use ($title, $content) {
+            return $this->service->create($title, $content, $this->userId);
+        });
     }
 
     /**
@@ -56,7 +67,9 @@ class NoteApiController extends ApiController {
      * @param string $content
      */
     public function update($id, $title, $content) {
-        return $this->controller->update($id, $title, $content);
+        return $this->handleNotFound(function () use ($id, $title, $content) {
+            return $this->service->update($id, $title, $content, $this->userId);
+        });
     }
 
     /**
@@ -67,7 +80,9 @@ class NoteApiController extends ApiController {
      * @param int $id
      */
     public function destroy($id) {
-        return $this->controller->destroy($id);
+        return $this->handleNotFound(function () use ($id) {
+            return $this->service->delete($id, $this->userId);
+        });
     }
 
 }
