@@ -48,7 +48,7 @@ class NoteServiceTest extends PHPUnit_Framework_TestCase {
 
 
     /**
-     * @expectedException OCP\AppFramework\Db\DoesNotExistException
+     * @expectedException OCA\OwnNotes\Service\NotFoundException
      */
     public function testUpdateNotFound() {
         // test the correct status code if no note is found

@@ -22,6 +22,15 @@ class NoteService {
         return $this->mapper->findAll($userId);
     }
 
+    private function handleException ($e) {
+        if ($e instanceof DoesNotExistException ||
+            $e instanceof MultipleObjectsReturnedException) {
+            throw new NotFoundException($e->getMessage());
+        } else {
+            throw $e;
+        }
+    }
+
     public function find($id, $userId) {
         try {
             error_log($id);
@@ -33,12 +42,7 @@ class NoteService {
         // into service related exceptions so controllers and service users
         // have to deal with only one type of exception
         } catch(Exception $e) {
-            if ($e instanceof DoesNotExistException ||
-                $e instanceof MultipleObjectsReturnedException) {
-                throw new NotFoundException($e->getMessage());
-            } else {
-                throw $e;
-            }
+            $this->handleException($e);
         }
     }
 
@@ -57,12 +61,7 @@ class NoteService {
             $note->setContent($content);
             return $this->mapper->update($note);
         } catch(Exception $e) {
-            if ($e instanceof DoesNotExistException ||
-                $e instanceof MultipleObjectsReturnedException) {
-                throw new NotFoundException($e->getMessage());
-            } else {
-                throw $e;
-            }
+            $this->handleException($e);
         }
     }
 
@@ -72,12 +71,7 @@ class NoteService {
             $this->mapper->delete($note);
             return $note;
         } catch(Exception $e) {
-            if ($e instanceof DoesNotExistException ||
-                $e instanceof MultipleObjectsReturnedException) {
-                throw new NotFoundException($e->getMessage());
-            } else {
-                throw $e;
-            }
+            $this->handleException($e);
         }
     }
 
