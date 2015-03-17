@@ -20,9 +20,6 @@ dist: clean
 	--exclude=$(project_dir)/js/node_modules \
 	--exclude=$(project_dir)/js/coverage
 
-appstore: appstore_package
-	ocdev appstore release build/artifacts/appstore/$(package_name).tar.gz
-
 appstore_package: clean
 	mkdir -p $(appstore_dir)
 	tar cvzf $(appstore_dir)/$(package_name).tar.gz $(project_dir) \
