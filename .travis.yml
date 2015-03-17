@@ -27,7 +27,7 @@ install:
   - mysql -u root -e "grant all on oc_autotest.* to 'oc_autotest'@'localhost';"
   # install owncloud
   - cd ..
-  - ocdev setup core --dir owncloud --branch $BRANCH
+  - ocdev setup core --dir owncloud --branch $BRANCH --no-history
   - cd owncloud
   - ocdev ci $DB
   # enable ownnotes
