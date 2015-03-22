@@ -14,8 +14,6 @@ matrix:
   allow_failures:
     - php: hhvm
 
-
-
 install:
   # install ocdev
   - sudo apt-get -y install python3-jinja2 python3-setuptools
