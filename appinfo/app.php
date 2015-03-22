@@ -2,22 +2,31 @@
 
 namespace OCA\OwnNotes\AppInfo;
 
-\OCP\App::addNavigationEntry([
-	// the string under which your app will be referenced in owncloud
-	'id' => 'ownnotes',
+use OCP\AppFramework\App;
 
-	// sorting weight for the navigation. The higher the number, the higher
-	// will it be listed in the navigation
-	'order' => 10,
+$app = new App('ownnotes');
+$container = $app->getContainer();
 
-	// the route that will be shown on startup
-	'href' => \OCP\Util::linkToRoute('ownnotes.page.index'),
+$container->query('OCP\INavigationManager')->add(function () use ($container) {
+	$urlGenerator = $container->query('OCP\IURLGenerator');
+	$l10n = $container->query('OCP\IL10N');
+	return [
+		// the string under which your app will be referenced in owncloud
+		'id' => 'ownnotes',
 
-	// the icon that will be shown in the navigation
-	// this file needs to exist in img/
-	'icon' => \OCP\Util::imagePath('ownnotes', 'app.svg'),
+		// sorting weight for the navigation. The higher the number, the higher
+		// will it be listed in the navigation
+		'order' => 10,
 
-	// the title of your application. This will be used in the
-	// navigation or on the settings page of your app
-	'name' => \OC_L10N::get('ownnotes')->t('Own Notes')
-]);
+		// the route that will be shown on startup
+		'href' => $urlGenerator->linkToRoute('ownnotes.page.index'),
+
+		// the icon that will be shown in the navigation
+		// this file needs to exist in img/
+		'icon' => $urlGenerator->imagePath('ownnotes', 'app.svg'),
+
+		// the title of your application. This will be used in the
+		// navigation or on the settings page of your app
+		'name' => $l10n->t('Own Notes'),
+	];
+});
