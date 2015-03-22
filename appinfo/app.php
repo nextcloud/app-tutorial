@@ -1,5 +1,4 @@
 <?php
-
 namespace OCA\OwnNotes\AppInfo;
 
 use OCP\AppFramework\App;
