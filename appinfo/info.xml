@@ -5,7 +5,7 @@
     <name>Notes Tutorial</name>
     <summary>App for taking notes</summary>
     <description><![CDATA[This is a tutorial app for taking notes to demonstrate the Nextcloud API]]></description>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
     <licence>agpl</licence>
     <author mail="dev@bernhard-posselt.com" >Bernhard Posselt</author>
     <namespace>NotesTutorial</namespace>
