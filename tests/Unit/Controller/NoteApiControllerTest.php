@@ -1,5 +1,5 @@
 <?php
-namespace OCA\OwnNotes\Controller;
+namespace OCA\NotesTutorial\Controller;
 
 require_once __DIR__ . '/NoteControllerTest.php';
 
@@ -8,7 +8,7 @@ class NoteApiControllerTest extends NoteControllerTest {
     public function setUp() {
         parent::setUp();
         $this->controller = new NoteApiController(
-            'ownnotes', $this->request, $this->service, $this->userId
+            'notestutorial', $this->request, $this->service, $this->userId
         );
     }
 

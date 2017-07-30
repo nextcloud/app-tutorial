@@ -1,40 +1,75 @@
-# Makefile for building the project
+# This file is licensed under the Affero General Public License version 3 or
+# later. See the COPYING file.
+# @author Bernhard Posselt <dev@bernhard-posselt.com>
+# @copyright Bernhard Posselt 2016
 
-app_name=ownnotes
-project_dir=$(CURDIR)/../$(app_name)
-build_dir=$(CURDIR)/build/artifacts
-appstore_dir=$(build_dir)/appstore
-source_dir=$(build_dir)/source
-package_name=$(app_name)
+app_name=$(notdir $(CURDIR))
+build_tools_directory=$(CURDIR)/build/tools
+source_build_directory=$(CURDIR)/build/artifacts/source
+source_package_name=$(source_build_directory)/$(app_name)
+appstore_build_directory=$(CURDIR)/build/artifacts/appstore
+appstore_package_name=$(appstore_build_directory)/$(app_name)
+composer=$(shell which composer 2> /dev/null)
 
-all: dist
+all: build
 
+.PHONY: build
+build:
+	make composer
+
+# Installs and updates the composer dependencies. If composer is not installed
+# a copy is fetched from the web
+.PHONY: composer
+composer:
+ifeq (, $(composer))
+	@echo "No composer command available, downloading a copy from the web"
+	mkdir -p $(build_tools_directory)
+	curl -sS https://getcomposer.org/installer | php
+	mv composer.phar $(build_tools_directory)
+	php $(build_tools_directory)/composer.phar install --prefer-dist
+	php $(build_tools_directory)/composer.phar update --prefer-dist
+else
+	composer install --prefer-dist
+	composer update --prefer-dist
+endif
+
+.PHONY: clean
 clean:
-	rm -rf $(build_dir)
+	rm -rf ./build
 
-dist: clean
-	mkdir -p $(source_dir)
-	tar cvzf $(source_dir)/$(package_name).tar.gz $(project_dir) \
-	--exclude-vcs \
-	--exclude=$(project_dir)/build/artifacts \
-	--exclude=$(project_dir)/js/node_modules \
-	--exclude=$(project_dir)/js/coverage
+.PHONY: distclean
+distclean: clean
+	rm -rf vendor
 
-appstore_package: clean
-	mkdir -p $(appstore_dir)
-	tar cvzf $(appstore_dir)/$(package_name).tar.gz $(project_dir) \
+# Builds the source and appstore package
+.PHONY: dist
+dist:
+	make source
+	make appstore
+
+.PHONY: source
+source:
+	rm -rf $(source_build_directory)
+	mkdir -p $(source_build_directory)
+	tar cvzf $(source_package_name).tar.gz ../$(app_name) \
 	--exclude-vcs \
-	--exclude=$(project_dir)/build \
-	--exclude=$(project_dir)/js/node_modules \
-	--exclude=$(project_dir)/js/.bowerrc \
-	--exclude=$(project_dir)/js/.jshintrc \
-	--exclude=$(project_dir)/js/Gruntfile.js \
-	--exclude=$(project_dir)/js/*.json \
-	--exclude=$(project_dir)/js/*.conf.js \
-	--exclude=$(project_dir)/js/*.log \
-	--exclude=$(project_dir)/js/README.md \
-	--exclude=$(project_dir)/js/.bowerrc \
-	--exclude=$(project_dir)/.travis.yml \
-	--exclude=$(project_dir)/phpunit*xml \
-	--exclude=$(project_dir)/Makefile \
-	--exclude=$(project_dir)/tests
+	--exclude="../$(app_name)/build" \
+	--exclude="../$(app_name)/*.log"
+
+.PHONY: appstore
+appstore:
+	rm -rf $(appstore_build_directory)
+	mkdir -p $(appstore_build_directory)
+	tar cvzf $(appstore_package_name).tar.gz ../$(app_name) \
+	--exclude-vcs \
+	--exclude="../$(app_name)/build" \
+	--exclude="../$(app_name)/tests" \
+	--exclude="../$(app_name)/Makefile" \
+	--exclude="../$(app_name)/*.log" \
+	--exclude="../$(app_name)/phpunit*xml" \
+	--exclude="../$(app_name)/composer.*"
+
+.PHONY: test
+test:
+	./vendor/phpunit/phpunit/phpunit -c phpunit.xml
+	./vendor/phpunit/phpunit/phpunit -c phpunit.integration.xml

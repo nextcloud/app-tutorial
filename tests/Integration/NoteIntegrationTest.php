@@ -1,11 +1,11 @@
 <?php
-namespace OCA\OwnNotes\Controller;
+namespace OCA\NotesTutorial\Controller;
 
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\App;
 use Test\TestCase;
 
-use OCA\OwnNotes\Db\Note;
+use OCA\NotesTutorial\Db\Note;
 
 class NoteIntregrationTest extends TestCase {
 
@@ -15,7 +15,7 @@ class NoteIntregrationTest extends TestCase {
 
     public function setUp() {
         parent::setUp();
-        $app = new App('ownnotes');
+        $app = new App('notestutorial');
         $container = $app->getContainer();
 
         // only replace the user id
@@ -24,11 +24,11 @@ class NoteIntregrationTest extends TestCase {
         });
 
         $this->controller = $container->query(
-            'OCA\OwnNotes\Controller\NoteController'
+            'OCA\NotesTutorial\Controller\NoteController'
         );
 
         $this->mapper = $container->query(
-            'OCA\OwnNotes\Db\NoteMapper'
+            'OCA\NotesTutorial\Db\NoteMapper'
         );
     }
 

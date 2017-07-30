@@ -1,39 +1,37 @@
-<database>
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/database.xsd">
     <name>*dbname*</name>
-    <create>true</create>
-    <overwrite>false</overwrite>
-    <charset>utf8</charset>
     <table>
-        <name>*dbprefix*ownnotes_notes</name>
+        <name>*dbprefix*notestutorial</name>
         <declaration>
             <field>
                 <name>id</name>
                 <type>integer</type>
+                <length>8</length>
+                <unsigned>true</unsigned>
                 <notnull>true</notnull>
                 <autoincrement>true</autoincrement>
-                <unsigned>true</unsigned>
                 <primary>true</primary>
-                <length>8</length>
             </field>
             <field>
                 <name>title</name>
                 <type>text</type>
                 <length>200</length>
-                <default></default>
                 <notnull>true</notnull>
+                <default></default>
             </field>
             <field>
                 <name>user_id</name>
                 <type>text</type>
                 <length>200</length>
-                <default></default>
                 <notnull>true</notnull>
+                <default></default>
             </field>
             <field>
                 <name>content</name>
                 <type>clob</type>
-                <default></default>
                 <notnull>true</notnull>
+                <default></default>
             </field>
         </declaration>
     </table>

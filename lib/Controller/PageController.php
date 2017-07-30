@@ -1,5 +1,5 @@
 <?php
- namespace OCA\OwnNotes\Controller;
+ namespace OCA\NotesTutorial\Controller;
 
  use OCP\IRequest;
  use OCP\AppFramework\Http\TemplateResponse;
@@ -16,7 +16,7 @@
       * @NoCSRFRequired
       */
      public function index() {
-         return new TemplateResponse('ownnotes', 'main');
+         return new TemplateResponse('notestutorial', 'main');
      }
 
  }

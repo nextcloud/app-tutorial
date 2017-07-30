@@ -8,7 +8,7 @@ This is the tutorial app. To install it change into your ownCloud's apps directo
 
 Then run:
 
-    git clone https://github.com/owncloud/app-tutorial.git ownnotes
+    git clone https://github.com/owncloud/app-tutorial.git notestutorial
 
 where the branch parameter is the ownCloud version that you are targeting:
 

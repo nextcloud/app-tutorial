@@ -1,5 +1,5 @@
 <?php
-namespace OCA\OwnNotes\Controller;
+namespace OCA\NotesTutorial\Controller;
 
 use PHPUnit_Framework_TestCase;
 
@@ -11,7 +11,7 @@ class PageControllerTest extends PHPUnit_Framework_TestCase {
 
 	public function setUp() {
 		$request = $this->getMockBuilder('OCP\IRequest')->getMock();
-		$this->controller = new PageController('ownnotes', $request);
+		$this->controller = new PageController('notestutorial', $request);
 	}
 
 

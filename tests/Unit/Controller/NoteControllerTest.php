@@ -1,12 +1,12 @@
 <?php
-namespace OCA\OwnNotes\Controller;
+namespace OCA\NotesTutorial\Controller;
 
 use PHPUnit_Framework_TestCase;
 
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
 
-use OCA\OwnNotes\Service\NotFoundException;
+use OCA\NotesTutorial\Service\NoteNotFound;
 
 
 class NoteControllerTest extends PHPUnit_Framework_TestCase {
@@ -18,11 +18,11 @@ class NoteControllerTest extends PHPUnit_Framework_TestCase {
 
     public function setUp() {
         $this->request = $this->getMockBuilder('OCP\IRequest')->getMock();
-        $this->service = $this->getMockBuilder('OCA\OwnNotes\Service\NoteService')
+        $this->service = $this->getMockBuilder('OCA\NotesTutorial\Service\NoteService')
             ->disableOriginalConstructor()
             ->getMock();
         $this->controller = new NoteController(
-            'ownnotes', $this->request, $this->service, $this->userId
+            'notestutorial', $this->request, $this->service, $this->userId
         );
     }
 
@@ -46,7 +46,7 @@ class NoteControllerTest extends PHPUnit_Framework_TestCase {
         // test the correct status code if no note is found
         $this->service->expects($this->once())
             ->method('update')
-            ->will($this->throwException(new NotFoundException()));
+            ->will($this->throwException(new NoteNotFound()));
 
         $result = $this->controller->update(3, 'title', 'content');
 

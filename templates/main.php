@@ -1,7 +1,7 @@
 <?php
-script('ownnotes', 'handlebars');
-script('ownnotes', 'script');
-style('ownnotes', 'style');
+script('notestutorial', 'handlebars');
+script('notestutorial', 'script');
+style('notestutorial', 'style');
 ?>
 
 <div id="app">

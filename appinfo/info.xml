@@ -1,14 +1,23 @@
 <?xml version="1.0"?>
-<info>
-    <id>ownnotes</id>
-    <name>Own Notes</name>
-    <description>My first ownCloud app</description>
-    <licence>AGPL</licence>
-    <author>Bernhard Posselt</author>
-    <version>0.0.2</version>
-    <namespace>OwnNotes</namespace>
-    <category>other</category>
+<info xmlns:xsi= "http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
+    <id>notestutorial</id>
+    <name>Notes Tutorial</name>
+    <summary>App for taking notes</summary>
+    <description><![CDATA[This is a tutorial app for taking notes to demonstrate the Nextcloud API]]></description>
+    <version>0.0.1</version>
+    <licence>agpl</licence>
+    <author mail="dev@bernhard-posselt.com" >Bernhard Posselt</author>
+    <namespace>NotesTutorial</namespace>
+    <category>office</category>
+    <bugs>https://github.com/nextcloud/app-tutorial</bugs>
     <dependencies>
-        <owncloud min-version="8" />
+        <nextcloud min-version="12" max-version="12"/>
     </dependencies>
+    <navigations>
+        <navigation>
+            <name>Notes Tutorial</name>
+            <route>notestutorial.page.index</route>
+        </navigation>
+    </navigations>
 </info>

@@ -189,7 +189,7 @@ View.prototype = {
     }
 };
 
-var notes = new Notes(OC.generateUrl('/apps/ownnotes/notes'));
+var notes = new Notes(OC.generateUrl('/apps/notestutorial/notes'));
 var view = new View(notes);
 notes.loadAll().done(function () {
     view.render();

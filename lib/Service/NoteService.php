@@ -1,31 +1,32 @@
 <?php
-namespace OCA\OwnNotes\Service;
+namespace OCA\NotesTutorial\Service;
 
 use Exception;
 
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\MultipleObjectsReturnedException;
 
-use OCA\OwnNotes\Db\Note;
-use OCA\OwnNotes\Db\NoteMapper;
+use OCA\NotesTutorial\Db\Note;
+use OCA\NotesTutorial\Db\NoteMapper;
 
 
 class NoteService {
 
+    /** @var NoteMapper */
     private $mapper;
 
     public function __construct(NoteMapper $mapper){
         $this->mapper = $mapper;
     }
 
-    public function findAll($userId) {
+    public function findAll(string $userId): array {
         return $this->mapper->findAll($userId);
     }
 
-    private function handleException ($e) {
+    private function handleException (Exception $e): void {
         if ($e instanceof DoesNotExistException ||
             $e instanceof MultipleObjectsReturnedException) {
-            throw new NotFoundException($e->getMessage());
+            throw new NoteNotFound($e->getMessage());
         } else {
             throw $e;
         }

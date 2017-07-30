@@ -1,0 +1,16 @@
+{
+    "name": "nextcloud/app-tutorial",
+    "description": "Nextcloud App Tutorial",
+    "type": "project",
+    "license": "AGPL",
+    "authors": [
+        {
+            "name": "Bernhard Posselt",
+            "email": "dev@bernhard-posselt.com"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "^5.4"
+    }
+}
