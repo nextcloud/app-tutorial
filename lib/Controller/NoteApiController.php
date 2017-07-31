@@ -52,7 +52,8 @@ class NoteApiController extends ApiController {
      * @NoAdminRequired
      */
     public function create(string $title, string $content): DataResponse {
-        return $this->service->create($title, $content, $this->userId);
+        return new DataResponse($this->service->create($title, $content,
+            $this->userId));
     }
 
     /**

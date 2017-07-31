@@ -1,4 +1,5 @@
 <?php
+
 namespace OCA\NotesTutorial\Controller;
 
 use OCP\IRequest;
@@ -14,13 +15,12 @@ class NoteController extends Controller {
     /** @var string */
     private $userId;
 
-
     use Errors;
 
     public function __construct($appName,
                                 IRequest $request,
                                 NoteService $service,
-                                $userId){
+                                $userId) {
         parent::__construct($appName, $request);
         $this->service = $service;
         $this->userId = $userId;
@@ -46,7 +46,8 @@ class NoteController extends Controller {
      * @NoAdminRequired
      */
     public function create(string $title, string $content): DataResponse {
-        return $this->service->create($title, $content, $this->userId);
+        return new DataResponse($this->service->create($title, $content,
+            $this->userId));
     }
 
     /**

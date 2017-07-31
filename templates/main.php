@@ -6,13 +6,13 @@ style('notestutorial', 'style');
 
 <div id="app">
 	<div id="app-navigation">
-		<?php print_unescaped($this->inc('part.navigation')); ?>
-		<?php print_unescaped($this->inc('part.settings')); ?>
+		<?php print_unescaped($this->inc('fragments/navigation')); ?>
+		<?php print_unescaped($this->inc('fragments/settings')); ?>
 	</div>
 
 	<div id="app-content">
 		<div id="app-content-wrapper">
-			<?php print_unescaped($this->inc('part.content')); ?>
+			<?php print_unescaped($this->inc('fragments/content')); ?>
 		</div>
 	</div>
 </div>
