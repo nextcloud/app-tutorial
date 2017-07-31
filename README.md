@@ -15,6 +15,10 @@ where the branch parameter is the ownCloud version that you are targeting:
 * Nextcloud 12: stable12
 * Nextcloud master: master
 
+Then install the dependencies using:
+
+    composer install
+
 ## Using the Makefile
 
 The following make targets are available:

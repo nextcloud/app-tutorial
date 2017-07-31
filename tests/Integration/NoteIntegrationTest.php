@@ -3,11 +3,15 @@ namespace OCA\NotesTutorial\Controller;
 
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\App;
+use OCP\IRequest;
 use Test\TestCase;
 
-use OCA\NotesTutorial\Db\Note;
 
-class NoteIntregrationTest extends TestCase {
+use OCA\NotesTutorial\Db\Note;
+use OCA\NotesTutorial\Db\NoteMapper;
+use OCP\IDBConnection;
+
+class NoteIntegrationTest extends TestCase {
 
     private $controller;
     private $mapper;
@@ -18,18 +22,20 @@ class NoteIntregrationTest extends TestCase {
         $app = new App('notestutorial');
         $container = $app->getContainer();
 
+        var_dump($container->getServer());
+
         // only replace the user id
-        $container->registerService('UserId', function($c) {
+        $container->registerService('userId', function() {
             return $this->userId;
         });
 
-        $this->controller = $container->query(
-            'OCA\NotesTutorial\Controller\NoteController'
-        );
+        // we do not care about the request but the controller needs it
+        $container->registerService(IRequest::class, function() {
+            return $this->createMock(IRequest::class);
+        });
 
-        $this->mapper = $container->query(
-            'OCA\NotesTutorial\Db\NoteMapper'
-        );
+        $this->controller = $container->query(NoteController::class);
+        $this->mapper = $container->query(NoteMapper::class);
     }
 
     public function testUpdate() {
