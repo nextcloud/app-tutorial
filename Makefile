@@ -49,25 +49,31 @@ dist:
 
 .PHONY: source
 source:
-	rm -rf $(source_build_directory)
-	mkdir -p $(source_build_directory)
-	tar cvzf $(source_package_name).tar.gz ../$(app_name) \
-	--exclude-vcs \
-	--exclude="../$(app_name)/build" \
-	--exclude="../$(app_name)/*.log"
+	rm -rf $(source_build_directory) $(source_artifact_directory)
+	mkdir -p $(source_build_directory) $(source_artifact_directory)
+	rsync -rv . $(source_build_directory) \
+	--exclude=/.git/ \
+	--exclude=/.idea/ \
+	--exclude=/build/ \
+	--exclude=/js/node_modules/ \
+	--exclude=*.log
 
 .PHONY: appstore
 appstore:
-	rm -rf $(appstore_build_directory)
-	mkdir -p $(appstore_build_directory)
-	tar cvzf $(appstore_package_name).tar.gz ../$(app_name) \
-	--exclude-vcs \
-	--exclude="../$(app_name)/build" \
-	--exclude="../$(app_name)/tests" \
-	--exclude="../$(app_name)/Makefile" \
-	--exclude="../$(app_name)/*.log" \
-	--exclude="../$(app_name)/phpunit*xml" \
-	--exclude="../$(app_name)/composer.*"
+	rm -rf $(appstore_build_directory) $(appstore_artifact_directory)
+	mkdir -p $(appstore_build_directory) $(appstore_artifact_directory)
+	cp --parents -r \
+	"appinfo" \
+	"css" \
+	"img" \
+	"lib" \
+	"templates" \
+	"vendor" \
+	"COPYING" \
+	"CHANGELOG.md" \
+	"js/script.js" \
+	"js/handlebars.js" \
+	$(appstore_build_directory)
 
 .PHONY: test
 test:
