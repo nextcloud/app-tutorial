@@ -1,6 +1,6 @@
 # Tutorial
 
-[![Build Status](https://travis-ci.org/nextcloud/news.svg?branch=master)](https://travis-ci.org/nextcloud/app-tutorial)
+[![Build Status](https://travis-ci.org/nextcloud/app-tutorial.svg?branch=master)](https://travis-ci.org/nextcloud/app-tutorial)
 
 This is the tutorial app. To install it change into your Nextcloud's apps directory:
 
