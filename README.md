@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/nextcloud/news.svg?branch=master)](https://travis-ci.org/nextcloud/app-tutorial)
 
-This is the tutorial app. To install it change into your ownCloud's apps directory:
+This is the tutorial app. To install it change into your Nextcloud's apps directory:
 
     cd nextcloud/apps
 
