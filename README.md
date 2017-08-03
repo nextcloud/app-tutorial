@@ -19,6 +19,8 @@ Then install the dependencies using:
 
     composer install
 
+**Important**: The tutorial requires PHP 7.1 due to type hinting. You may need to remove them for PHP versions lower than 7.1 and 7.0
+
 ## Using the Makefile
 
 The following make targets are available:

@@ -1,4 +1,4 @@
-sudo: required
+sudo: false
 dist: trusty
 language: php
 php:
@@ -6,8 +6,6 @@ php:
 env:
     global:
         - CORE_BRANCH=stable12
-    matrix:
-        - DB=pgsql
 
 matrix:
     allow_failures:
@@ -17,6 +15,8 @@ matrix:
           env: DB=sqlite
         - php: 7.1
           env: DB=mysql
+        - php: 7.1
+          env: DB=pgsql
         - php: 7.1
           env: DB=pgsql CORE_BRANCH=master
     fast_finish: true
@@ -54,7 +54,7 @@ after_failure:
 
 addons:
     firefox: 'latest'
-    mariadb: '10.0'
+    mariadb: '10.1'
 
 services:
   - postgresql
