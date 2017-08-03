@@ -1,12 +1,15 @@
 <?php
-namespace OCA\NotesTutorial\Controller;
+namespace OCA\NotesTutorial\Tests\Unit\Controller;
 
 use PHPUnit_Framework_TestCase;
 
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
+use OCP\IRequest;
 
 use OCA\NotesTutorial\Service\NoteNotFound;
+use OCA\NotesTutorial\Service\NoteService;
+use OCA\NotesTutorial\Controller\NoteController;
 
 
 class NoteControllerTest extends PHPUnit_Framework_TestCase {
@@ -17,8 +20,8 @@ class NoteControllerTest extends PHPUnit_Framework_TestCase {
     protected $request;
 
     public function setUp() {
-        $this->request = $this->getMockBuilder('OCP\IRequest')->getMock();
-        $this->service = $this->getMockBuilder('OCA\NotesTutorial\Service\NoteService')
+        $this->request = $this->getMockBuilder(IRequest::class)->getMock();
+        $this->service = $this->getMockBuilder(NoteService::class)
             ->disableOriginalConstructor()
             ->getMock();
         $this->controller = new NoteController(

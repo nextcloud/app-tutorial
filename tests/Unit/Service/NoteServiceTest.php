@@ -1,11 +1,13 @@
 <?php
-namespace OCA\NotesTutorial\Service;
+namespace OCA\NotesTutorial\Tests\Unit\Service;
 
 use PHPUnit_Framework_TestCase;
 
 use OCP\AppFramework\Db\DoesNotExistException;
 
 use OCA\NotesTutorial\Db\Note;
+use OCA\NotesTutorial\Service\NoteService;
+use OCA\NotesTutorial\Db\NoteMapper;
 
 class NoteServiceTest extends PHPUnit_Framework_TestCase {
 
@@ -14,7 +16,7 @@ class NoteServiceTest extends PHPUnit_Framework_TestCase {
     private $userId = 'john';
 
     public function setUp() {
-        $this->mapper = $this->getMockBuilder('OCA\NotesTutorial\Db\NoteMapper')
+        $this->mapper = $this->getMockBuilder(NoteMapper::class)
             ->disableOriginalConstructor()
             ->getMock();
         $this->service = new NoteService($this->mapper);

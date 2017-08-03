@@ -1,5 +1,5 @@
 <?php
-namespace OCA\NotesTutorial\Controller;
+namespace OCA\NotesTutorial\Tests\Integration\Controller;
 
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\App;
@@ -9,6 +9,7 @@ use Test\TestCase;
 
 use OCA\NotesTutorial\Db\Note;
 use OCA\NotesTutorial\Db\NoteMapper;
+use OCA\NotesTutorial\Controller\NoteController;
 use OCP\IDBConnection;
 
 class NoteIntegrationTest extends TestCase {
@@ -21,8 +22,6 @@ class NoteIntegrationTest extends TestCase {
         parent::setUp();
         $app = new App('notestutorial');
         $container = $app->getContainer();
-
-        var_dump($container->getServer());
 
         // only replace the user id
         $container->registerService('userId', function() {

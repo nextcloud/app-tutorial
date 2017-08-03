@@ -1,7 +1,8 @@
 <?php
-namespace OCA\NotesTutorial\Controller;
+namespace OCA\NotesTutorial\Tests\Unit\Controller;
 
-require_once __DIR__ . '/NoteControllerTest.php';
+
+use OCA\NotesTutorial\Controller\NoteApiController;
 
 class NoteApiControllerTest extends NoteControllerTest {
 
