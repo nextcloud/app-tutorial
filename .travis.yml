@@ -32,7 +32,6 @@ before_install:
     # install core
     - cd ../
     - git clone https://github.com/nextcloud/server.git --recursive --depth 1 -b $CORE_BRANCH nextcloud
-    - env
     - mv "$TRAVIS_BUILD_DIR" nextcloud/apps/notestutorial
 
 before_script:
