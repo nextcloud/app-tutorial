@@ -1,23 +1,46 @@
 <?php
 namespace OCA\NotesTutorial\Db;
 
+use OCP\AppFramework\Db\DoesNotExistException;
+use OCP\AppFramework\Db\Entity;
+use OCP\AppFramework\Db\QBMapper;
+use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\IDBConnection;
-use OCP\AppFramework\Db\Mapper;
 
-class NoteMapper extends Mapper {
+class NoteMapper extends QBMapper {
 
     public function __construct(IDBConnection $db) {
-        parent::__construct($db, 'notestutorial', '\OCA\NotesTutorial\Db\Note');
+        parent::__construct($db, 'notestutorial', Note::class);
     }
 
-    public function find(int $id, string $userId): Note {
-        $sql = 'SELECT * FROM *PREFIX*notestutorial WHERE id = ? AND user_id = ?';
-        return $this->findEntity($sql, [$id, $userId]);
-    }
+	/**
+	 * @param int $id
+	 * @param string $userId
+	 * @return Entity|Note
+	 * @throws \OCP\AppFramework\Db\MultipleObjectsReturnedException
+	 * @throws DoesNotExistException
+	 */
+	public function find(int $id, string $userId): Note {
+		/* @var $qb IQueryBuilder */
+		$qb = $this->db->getQueryBuilder();
+		$qb->select('*')
+			->from('notestutorial')
+			->where($qb->expr()->eq('id', $qb->createNamedParameter($id, IQueryBuilder::PARAM_INT)))
+			->andWhere($qb->expr()->eq('user_id', $qb->createNamedParameter($userId)));
+		return $this->findEntity($qb);
+	}
 
+	/**
+	 * @param string $userId
+	 * @return array
+	 */
     public function findAll(string $userId): array {
-        $sql = 'SELECT * FROM *PREFIX*notestutorial WHERE user_id = ?';
-        return $this->findEntities($sql, [$userId]);
+		/* @var $qb IQueryBuilder */
+		$qb = $this->db->getQueryBuilder();
+		$qb->select('*')
+			->from('notestutorial')
+			->where($qb->expr()->eq('user_id', $qb->createNamedParameter($userId)));
+		return $this->findEntities($qb);
     }
 
 }
