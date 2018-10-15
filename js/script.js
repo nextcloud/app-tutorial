@@ -29,10 +29,12 @@ Notes.prototype = {
     getActive: function () {
         return this._activeNote;
     },
-    removeActive: function () {
+    remove: function (id) {
+		if (typeof this._activeNote === 'undefined') {
+			return;
+		}
         var index;
         var deferred = $.Deferred();
-        var id = this._activeNote.id;
         this._notes.forEach(function (note, counter) {
             if (note.id === id) {
                 index = counter;
@@ -166,9 +168,10 @@ View.prototype = {
         // delete a note
         $('#app-navigation .note .delete').click(function () {
             var entry = $(this).closest('.note');
+            var id = entry.data('id');
             entry.find('.app-navigation-entry-menu').removeClass('open');
 
-            self._notes.removeActive().done(function () {
+            self._notes.remove(id).done(function () {
                 self.render();
             }).fail(function () {
                 alert('Could not delete note, not found');
