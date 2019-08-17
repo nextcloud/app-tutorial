@@ -2,3 +2,5 @@
 *.iml
 /vendor/
 /build/
+node_modules/
+js/
