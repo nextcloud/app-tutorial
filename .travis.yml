@@ -5,22 +5,19 @@ php:
     - 7.1
 env:
     global:
-        - CORE_BRANCH=stable12
-        - TESTS=php
+        - CORE_BRANCH=master
+        - FRONTEND=no
+        - DB=sqlite
 
 matrix:
-    allow_failures:
-        - env: DB=pgsql CORE_BRANCH=master
     include:
+        - env: FRONTEND=yes
         - php: 7.1
           env: DB=sqlite
         - php: 7.1
           env: DB=mysql
         - php: 7.1
           env: DB=pgsql
-        - php: 7.1
-          env: DB=pgsql CORE_BRANCH=master
-        - env: TESTS=frontend
     fast_finish: true
 
 before_install:
@@ -29,7 +26,7 @@ before_install:
     - sh -e /etc/init.d/xvfb start
     - nvm install 8
     - npm install -g npm@latest
-    - make
+    - make composer
     # install core
     - cd ../
     - git clone https://github.com/nextcloud/server.git --recursive --depth 1 -b $CORE_BRANCH nextcloud
@@ -48,9 +45,9 @@ before_script:
     - cd apps/notestutorial
 
 script:
-    - if [[ "$TESTS" == 'php' ]]; then make test; fi
-    - if [[ "$TESTS" == 'frontend' ]]; then npm install; fi
-    - if [[ "$TESTS" == 'frontend' ]]; then npm run build; fi
+    - if [[ "FRONTEND" == 'no' ]]; then make test; fi
+    - if [[ "FRONTEND" == 'yes' ]]; then make; fi
+
 
 after_failure:
     - cat ../../data/nextcloud.log
