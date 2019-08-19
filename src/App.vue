@@ -100,9 +100,14 @@ export default {
 	 * Fetch list of notes when the component is loaded
 	 */
 	async mounted() {
-		const response = await axios.get(OC.generateUrl('/apps/notestutorial/notes'))
+		try {
+			const response = await axios.get(OC.generateUrl('/apps/notestutorial/notes'))
+			this.notes = response.data
+		} catch (e) {
+			console.error(e)
+			OCP.Toast.error(t('notestutorial', 'Could not fetch notes'))
+		}
 		this.loading = false
-		this.notes = response.data
 	},
 	methods: {
 		/**
@@ -160,10 +165,15 @@ export default {
 		 */
 		async createNote(note) {
 			this.updating = true
-			const response = await axios.post(OC.generateUrl(`/apps/notestutorial/notes`), note)
-			const index = this.notes.findIndex((match) => match.id === this.currentNoteId)
-			this.$set(this.notes, index, response.data)
-			this.currentNoteId = response.data.id
+			try {
+				const response = await axios.post(OC.generateUrl(`/apps/notestutorial/notes`), note)
+				const index = this.notes.findIndex((match) => match.id === this.currentNoteId)
+				this.$set(this.notes, index, response.data)
+				this.currentNoteId = response.data.id
+			} catch (e) {
+				console.error(e)
+				OCP.Toast.error(t('notestutorial', 'Could not create the note'))
+			}
 			this.updating = false
 		},
 		/**
@@ -172,7 +182,12 @@ export default {
 		 */
 		async updateNote(note) {
 			this.updating = true
-			await axios.put(OC.generateUrl(`/apps/notestutorial/notes/${note.id}`), note)
+			try {
+				await axios.put(OC.generateUrl(`/apps/notestutorial/notes/${note.id}`), note)
+			} catch (e) {
+				console.error(e)
+				OCP.Toast.error(t('notestutorial', 'Could not update the note'))
+			}
 			this.updating = false
 		},
 		/**
@@ -180,12 +195,17 @@ export default {
 		 * @param {Object} note Note object
 		 */
 		async deleteNote(note) {
-			await axios.delete(OC.generateUrl(`/apps/notestutorial/notes/${note.id}`))
-			this.notes.splice(this.notes.indexOf(note), 1)
-			if (this.currentNoteId === note.id) {
-				this.currentNoteId = null
+			try {
+				await axios.delete(OC.generateUrl(`/apps/notestutorial/notes/${note.id}`))
+				this.notes.splice(this.notes.indexOf(note), 1)
+				if (this.currentNoteId === note.id) {
+					this.currentNoteId = null
+				}
+				OCP.Toast.success(t('notestutorial', 'Note deleted'))
+			} catch (e) {
+				console.error(e)
+				OCP.Toast.error(t('notestutorial', 'Could not delete the note'))
 			}
-			OCP.Toast.success('Note deleted')
 		}
 	}
 }
