@@ -1,8 +1,11 @@
-# Tutorial
+# Nextcloud App Tutorial
 
 [![Build Status](https://travis-ci.org/nextcloud/app-tutorial.svg?branch=master)](https://travis-ci.org/nextcloud/app-tutorial)
 
-This is the [tutorial](https://docs.nextcloud.com/server/14/developer_manual/app/startapp.html) app. To install it change into your Nextcloud's apps directory:
+This is the [tutorial app](https://docs.nextcloud.com/server/latest/developer_manual/app/tutorial.html) which shows how to develop a very simple notes app.
+ 
+## Try it 
+To install it change into your Nextcloud's apps directory:
 
     cd nextcloud/apps
 
@@ -10,21 +13,15 @@ Then run:
 
     git clone https://github.com/nextcloud/app-tutorial.git notestutorial
 
-where the branch parameter is the ownCloud version that you are targeting:
-
-* Nextcloud 12: stable12
-* Nextcloud master: master
-
 Then install the dependencies using:
 
-    composer install
+    make composer
 
-**Important**: The tutorial requires PHP 7.1 due to type hinting. You may need to remove them for PHP versions lower than 7.1 and 7.0
+## Frontend development
 
-## Using the Makefile
+The app tutorial also shows the very basic implementation of an app frontend using [Vue.js](https://vuejs.org/). To build the frontend code after doing changes to its source in `src/` requires to have Node and npm installed.
 
-The following make targets are available:
+- 👩‍💻 Run `make dev-setup` to install the frontend dependencies
+- 🏗 To build the Javascript whenever you make changes, run `make build-js`
 
-* **test**: runs all tests
-* **appstore**: builds the package that can be uploaded to the app store
-* **source**: builds the source package
+To continuously run the build when editing source files you can make use of the `make watch-js` command.
