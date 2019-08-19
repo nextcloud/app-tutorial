@@ -24,29 +24,31 @@ class Version1400Date20181013124730 extends SimpleMigrationStep {
 		/** @var ISchemaWrapper $schema */
 		$schema = $schemaClosure();
 
-		if (!$schema->hasTable('notestutorial')) {
-			$table = $schema->createTable('notestutorial');
-			$table->addColumn('id', 'bigint', [
+		if (!$schema->hasTable('notes_meta')) {
+			$table = $schema->createTable('notes_meta');
+			$table->addColumn('id', 'integer', [
 				'autoincrement' => true,
 				'notnull' => true,
-				'length' => 8,
-				'unsigned' => true,
 			]);
-			$table->addColumn('title', 'string', [
+			$table->addColumn('file_id', 'integer', [
 				'notnull' => true,
-				'length' => 200,
-				'default' => '',
 			]);
 			$table->addColumn('user_id', 'string', [
 				'notnull' => true,
-				'length' => 200,
-				'default' => '',
+				'length' => 64,
 			]);
-			$table->addColumn('content', 'text', [
+			$table->addColumn('last_update', 'integer', [
 				'notnull' => true,
-				'default' => '',
 			]);
+			$table->addColumn('etag', 'string', [
+				'notnull' => true,
+				'length' => 32,
+			]);
+
 			$table->setPrimaryKey(['id']);
+			$table->addIndex(['file_id'], 'notes_meta_file_id_index');
+			$table->addIndex(['user_id'], 'notes_meta_user_id_index');
+			$table->addUniqueIndex(['file_id', 'user_id'], 'notes_meta_file_user_index');
 		}
 		return $schema;
 	}

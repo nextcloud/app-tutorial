@@ -1,13 +1,13 @@
 <template>
 	<div id="content" class="app-notestutorial">
-		<app-navigation>
-			<app-navigation-new v-if="!loading" :text="t('notestutorial', 'New note')" :disabled="false"
+		<AppNavigation>
+			<AppNavigationNew v-if="!loading" :text="t('notestutorial', 'New note')" :disabled="false"
 				button-id="new-notestutorial-button" button-class="icon-add" @click="newNote" />
 			<ul>
-				<app-navigation-item v-for="note in notes" :key="note.id" :item="noteEntry(note)" />
+				<AppNavigationItem v-for="note in notes" :key="note.id" :item="noteEntry(note)" />
 			</ul>
-		</app-navigation>
-		<app-content>
+		</AppNavigation>
+		<AppContent>
 			<div v-if="currentNote">
 				<input ref="title" v-model="currentNote.title" type="text"
 					:disabled="updating">
@@ -19,7 +19,7 @@
 				<div class="icon-file" />
 				<h2>{{ t('notestutorial', 'Create a note to get started') }}</h2>
 			</div>
-		</app-content>
+		</AppContent>
 	</div>
 </template>
 
@@ -52,6 +52,7 @@ export default {
 	computed: {
 		/**
 		 * Return the currently selected note object
+		 * @returns {Object|null}
 		 */
 		currentNote() {
 			if (this.currentNoteId === null) {
@@ -61,6 +62,7 @@ export default {
 		},
 		/**
 		 * Return the item object for the sidebar entry of a note
+		 * @returns {Object}
 		 */
 		noteEntry() {
 			return (note) => {
@@ -88,6 +90,7 @@ export default {
 		},
 		/**
 		 * Returns true if a note is selected and its title is not empty
+		 * @returns {Boolean}
 		 */
 		savePossible() {
 			return this.currentNote && this.currentNote.title !== ''
@@ -96,15 +99,15 @@ export default {
 	/**
 	 * Fetch list of notes when the component is loaded
 	 */
-	mounted() {
-		axios.get(OC.generateUrl('/apps/notestutorial/notes')).then((response) => {
-			this.loading = false
-			this.notes = response.data
-		})
+	async mounted() {
+		const response = await axios.get(OC.generateUrl('/apps/notestutorial/notes'))
+		this.loading = false
+		this.notes = response.data
 	},
 	methods: {
 		/**
 		 * Create a new note and focus the note content field automatically
+		 * @param {Object} note Note object
 		 */
 		openNote(note) {
 			if (this.updating) {
@@ -153,41 +156,41 @@ export default {
 		},
 		/**
 		 * Create a new note by sending the information to the server
+		 * @param {Object} note Note object
 		 */
-		createNote(note) {
+		async createNote(note) {
 			this.updating = true
-			axios.post(OC.generateUrl(`/apps/notestutorial/notes`), note).then((response) => {
-				const index = this.notes.findIndex((match) => match.id === this.currentNoteId)
-				this.$set(this.notes, index, response.data)
-				this.currentNoteId = response.data.id
-				this.updating = false
-			})
+			const response = await axios.post(OC.generateUrl(`/apps/notestutorial/notes`), note)
+			const index = this.notes.findIndex((match) => match.id === this.currentNoteId)
+			this.$set(this.notes, index, response.data)
+			this.currentNoteId = response.data.id
+			this.updating = false
 		},
 		/**
 		 * Update an existing note on the server
+		 * @param {Object} note Note object
 		 */
-		updateNote(note) {
+		async updateNote(note) {
 			this.updating = true
-			axios.put(OC.generateUrl(`/apps/notestutorial/notes/${note.id}`), note).then((response) => {
-				this.updating = false
-			})
+			await axios.put(OC.generateUrl(`/apps/notestutorial/notes/${note.id}`), note)
+			this.updating = false
 		},
 		/**
 		 * Delete a note, remove it from the frontend and show a hint
+		 * @param {Object} note Note object
 		 */
-		deleteNote(note) {
-			axios.delete(OC.generateUrl(`/apps/notestutorial/notes/${note.id}`)).then((response) => {
-				this.notes.splice(this.notes.indexOf(note), 1)
-				if (this.currentNoteId === note.id) {
-					this.currentNoteId = null
-				}
-				window.OCP.Toast.success('Note deleted')
-			})
+		async deleteNote(note) {
+			await axios.delete(OC.generateUrl(`/apps/notestutorial/notes/${note.id}`))
+			this.notes.splice(this.notes.indexOf(note), 1)
+			if (this.currentNoteId === note.id) {
+				this.currentNoteId = null
+			}
+			OCP.Toast.success('Note deleted')
 		}
 	}
 }
 </script>
-<style>
+<style scoped>
 	#app-content > div {
 		width: 100%;
 		height: 100%;
