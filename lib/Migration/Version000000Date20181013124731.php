@@ -9,10 +9,7 @@ use OCP\DB\ISchemaWrapper;
 use OCP\Migration\SimpleMigrationStep;
 use OCP\Migration\IOutput;
 
-/**
- * Auto-generated migration step: Please modify to your needs!
- */
-class Version1400Date20181013124730 extends SimpleMigrationStep {
+class Version000000Date20181013124731 extends SimpleMigrationStep {
 
 	/**
 	 * @param IOutput $output
@@ -24,31 +21,27 @@ class Version1400Date20181013124730 extends SimpleMigrationStep {
 		/** @var ISchemaWrapper $schema */
 		$schema = $schemaClosure();
 
-		if (!$schema->hasTable('notes_meta')) {
-			$table = $schema->createTable('notes_meta');
+		if (!$schema->hasTable('notestutorial')) {
+			$table = $schema->createTable('notestutorial');
 			$table->addColumn('id', 'integer', [
 				'autoincrement' => true,
 				'notnull' => true,
 			]);
-			$table->addColumn('file_id', 'integer', [
+			$table->addColumn('title', 'string', [
 				'notnull' => true,
+				'length' => 200
 			]);
 			$table->addColumn('user_id', 'string', [
 				'notnull' => true,
-				'length' => 64,
+				'length' => 200,
 			]);
-			$table->addColumn('last_update', 'integer', [
+			$table->addColumn('content', 'text', [
 				'notnull' => true,
-			]);
-			$table->addColumn('etag', 'string', [
-				'notnull' => true,
-				'length' => 32,
+				'default' => ''
 			]);
 
 			$table->setPrimaryKey(['id']);
-			$table->addIndex(['file_id'], 'notes_meta_file_id_index');
-			$table->addIndex(['user_id'], 'notes_meta_user_id_index');
-			$table->addUniqueIndex(['file_id', 'user_id'], 'notes_meta_file_user_index');
+			$table->addIndex(['user_id'], 'notestutorial_user_id_index');
 		}
 		return $schema;
 	}
