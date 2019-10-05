@@ -2,4 +2,4 @@
 script('notestutorial', 'notestutorial');
 ?>
 
-<div id="content"></div>
+<div id="q-app"></div>

@@ -1,19 +1,28 @@
 <template>
 	<div id="content" class="app-notestutorial">
 		<AppNavigation>
-			<AppNavigationNew v-if="!loading" :text="t('notestutorial', 'New note')" :disabled="false"
-				button-id="new-notestutorial-button" button-class="icon-add" @click="newNote" />
+			<AppNavigationNew v-if="!loading"
+				:text="t('notestutorial', 'New note')"
+				:disabled="false"
+				button-id="new-notestutorial-button"
+				button-class="icon-add"
+				@click="newNote" />
 			<ul>
 				<AppNavigationItem v-for="note in notes" :key="note.id" :item="noteEntry(note)" />
 			</ul>
 		</AppNavigation>
 		<AppContent>
 			<div v-if="currentNote">
-				<input ref="title" v-model="currentNote.title" type="text"
+				<input ref="title"
+					v-model="currentNote.title"
+					type="text"
 					:disabled="updating">
 				<textarea ref="content" v-model="currentNote.content" :disabled="updating" />
-				<input type="button" class="primary" :value="t('notestutorial', 'Save')"
-					:disabled="updating || !savePossible" @click="saveNote">
+				<input type="button"
+					class="primary"
+					:value="t('notestutorial', 'Save')"
+					:disabled="updating || !savePossible"
+					@click="saveNote">
 			</div>
 			<div v-else id="emptycontent">
 				<div class="icon-file" />
@@ -31,7 +40,7 @@ import {
 	AppNavigationNew
 } from 'nextcloud-vue'
 
-import axios from 'nextcloud-axios'
+import axios from '@nextcloud/axios'
 
 export default {
 	name: 'App',
