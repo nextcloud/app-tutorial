@@ -29,5 +29,5 @@ Vue.prototype.OCA = OCA
 
 export default new Vue({
 	el: '#content',
-	render: h => h(App)
+	render: h => h(App),
 })

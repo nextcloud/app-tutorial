@@ -37,7 +37,7 @@ import {
 	AppContent,
 	AppNavigation,
 	AppNavigationItem,
-	AppNavigationNew
+	AppNavigationNew,
 } from 'nextcloud-vue'
 
 import axios from '@nextcloud/axios'
@@ -48,14 +48,14 @@ export default {
 		AppContent,
 		AppNavigation,
 		AppNavigationItem,
-		AppNavigationNew
+		AppNavigationNew,
 	},
 	data: function() {
 		return {
 			notes: [],
 			currentNoteId: null,
 			updating: false,
-			loading: true
+			loading: true,
 		}
 	},
 	computed: {
@@ -90,10 +90,10 @@ export default {
 									} else {
 										this.deleteNote(note)
 									}
-								}
-							}
-						]
-					}
+								},
+							},
+						],
+					},
 				}
 			}
 		},
@@ -103,7 +103,7 @@ export default {
 		 */
 		savePossible() {
 			return this.currentNote && this.currentNote.title !== ''
-		}
+		},
 	},
 	/**
 	 * Fetch list of notes when the component is loaded
@@ -154,7 +154,7 @@ export default {
 				this.notes.push({
 					id: -1,
 					title: '',
-					content: ''
+					content: '',
 				})
 				this.$nextTick(() => {
 					this.$refs.title.focus()
@@ -215,8 +215,8 @@ export default {
 				console.error(e)
 				OCP.Toast.error(t('notestutorial', 'Could not delete the note'))
 			}
-		}
-	}
+		},
+	},
 }
 </script>
 <style scoped>
