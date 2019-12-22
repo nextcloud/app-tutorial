@@ -25,7 +25,7 @@
 	"dependencies": {
 		"@nextcloud/axios": "^0.5.0",
 		"nextcloud-server": "^0.15.10",
-		"nextcloud-vue": "^0.12.7",
+		"nextcloud-vue": "^0.12.8",
 		"vue": "^2.6.11"
 	},
 	"browserslist": [
