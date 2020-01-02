@@ -1,6 +1,7 @@
 <?php
 namespace OCA\NotesTutorial\Tests\Unit\Controller;
 
+use PHPUnit\Framework\TestCase;
 use PHPUnit_Framework_TestCase;
 
 use OCP\AppFramework\Http;
@@ -12,14 +13,14 @@ use OCA\NotesTutorial\Service\NoteService;
 use OCA\NotesTutorial\Controller\NoteController;
 
 
-class NoteControllerTest extends PHPUnit_Framework_TestCase {
+class NoteControllerTest extends TestCase {
 
     protected $controller;
     protected $service;
     protected $userId = 'john';
     protected $request;
 
-    public function setUp() {
+    public function setUp(): void {
         $this->request = $this->getMockBuilder(IRequest::class)->getMock();
         $this->service = $this->getMockBuilder(NoteService::class)
             ->disableOriginalConstructor()

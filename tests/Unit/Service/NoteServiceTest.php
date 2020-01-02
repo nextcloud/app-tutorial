@@ -1,6 +1,8 @@
 <?php
 namespace OCA\NotesTutorial\Tests\Unit\Service;
 
+use OCA\NotesTutorial\Service\NoteNotFound;
+use PHPUnit\Framework\TestCase;
 use PHPUnit_Framework_TestCase;
 
 use OCP\AppFramework\Db\DoesNotExistException;
@@ -9,13 +11,13 @@ use OCA\NotesTutorial\Db\Note;
 use OCA\NotesTutorial\Service\NoteService;
 use OCA\NotesTutorial\Db\NoteMapper;
 
-class NoteServiceTest extends PHPUnit_Framework_TestCase {
+class NoteServiceTest extends TestCase {
 
     private $service;
     private $mapper;
     private $userId = 'john';
 
-    public function setUp() {
+    public function setUp(): void {
         $this->mapper = $this->getMockBuilder(NoteMapper::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -48,11 +50,8 @@ class NoteServiceTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($updatedNote, $result);
     }
 
-
-    /**
-     * @expectedException OCA\NotesTutorial\Service\NoteNotFound
-     */
     public function testUpdateNotFound() {
+        $this->expectException(NoteNotFound::class);
         // test the correct status code if no note is found
         $this->mapper->expects($this->once())
             ->method('find')

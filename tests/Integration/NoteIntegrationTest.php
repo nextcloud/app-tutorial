@@ -4,7 +4,7 @@ namespace OCA\NotesTutorial\Tests\Integration\Controller;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\App;
 use OCP\IRequest;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 
 use OCA\NotesTutorial\Db\Note;
@@ -12,13 +12,13 @@ use OCA\NotesTutorial\Db\NoteMapper;
 use OCA\NotesTutorial\Controller\NoteController;
 use OCP\IDBConnection;
 
-class NoteIntegrationTest extends PHPUnit_Framework_TestCase {
+class NoteIntegrationTest extends TestCase {
 
     private $controller;
     private $mapper;
     private $userId = 'john';
 
-    public function setUp() {
+    public function setUp(): void {
         $app = new App('notestutorial');
         $container = $app->getContainer();
 
