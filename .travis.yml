@@ -17,6 +17,10 @@ matrix:
         - php: 7.2
           env: DB=mysql
         - php: 7.3
+          env: DB=mysql
+        - php: 7.4
+          env: DB=mysql
+        - php: 7.3
           env: DB=pgsql
     fast_finish: true
 
