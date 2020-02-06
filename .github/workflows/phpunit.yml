@@ -7,6 +7,9 @@ on:
       - master
       - stable*
 
+env:
+  APP_NAME: notestutorial
+
 jobs:
   php:
     runs-on: ubuntu-latest
@@ -19,7 +22,7 @@ jobs:
         databases: ['sqlite']
         server-versions: ['master']
   
-    name: php${{ matrix.php-versions }}/${{ matrix.databases }} on ${{ matrix.server-versions }}
+    name: php${{ matrix.php-versions }}-${{ matrix.databases }}-${{ matrix.server-versions }}
 
     steps:
       - name: Checkout server
@@ -27,18 +30,20 @@ jobs:
         with:
           repository: nextcloud/server
           ref: test/debug-install
+
       - name: Checkout submodules
         shell: bash
         run: |
           auth_header="$(git config --local --get http.https://github.com/.extraheader)"
           git submodule sync --recursive
           git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive --depth=1
+
       - name: Checkout app
         uses: actions/checkout@v2
         with:
-          path: apps/notestutorial
+          path: apps/${{ env.APP_NAME }}
 
-      - name: Set up php${{ matrix.php-versions }}
+      - name: Set up php ${{ matrix.php-versions }}
         uses: shivammathur/setup-php@v1
         with:
           php-version: ${{ matrix.php-versions }}
@@ -46,20 +51,21 @@ jobs:
           extensions: mbstring, iconv, fileinfo, intl, sqlite, pdo_sqlite
           coverage: none
 
-      - name: Set up nextcloud
+      - name: Set up Nextcloud
         env:
           DB_PORT: 4444
         run: |
           mkdir data
           ./occ maintenance:install --verbose --database=${{ matrix.databases }} --database-name=nextcloud --database-host=127.0.0.1 --database-port=$DB_PORT --database-user=root --database-pass=rootpassword --admin-user admin --admin-pass password 
-          ./occ app:enable notestutorial
+          ./occ app:enable ${{ env.APP_NAME }}
           php -S localhost:8080 &
 
       - name: PHPUnit
-        working-directory: apps/notestutorial
+        working-directory: apps/${{ env.APP_NAME }}
         run: phpunit -c phpunit.xml
+
       - name: PHPUnit integration
-        working-directory: apps/notestutorial
+        working-directory: apps/${{ env.APP_NAME }}
         run: phpunit -c phpunit.integration.xml
 
   mysql:
@@ -73,7 +79,7 @@ jobs:
         databases: ['mysql']
         server-versions: ['master']
   
-    name: php${{ matrix.php-versions }}/${{ matrix.databases }} on ${{ matrix.server-versions }}
+    name: php${{ matrix.php-versions }}-${{ matrix.databases }}-${{ matrix.server-versions }}
 
     services:
       mysql:
@@ -90,18 +96,20 @@ jobs:
         with:
           repository: nextcloud/server
           ref: test/debug-install
+
       - name: Checkout submodules
         shell: bash
         run: |
           auth_header="$(git config --local --get http.https://github.com/.extraheader)"
           git submodule sync --recursive
           git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive --depth=1
+
       - name: Checkout app
         uses: actions/checkout@v2
         with:
-          path: apps/notestutorial
+          path: apps/${{ env.APP_NAME }}
 
-      - name: Set up php${{ matrix.php-versions }}
+      - name: Set up php ${{ matrix.php-versions }}
         uses: shivammathur/setup-php@v1
         with:
           php-version: ${{ matrix.php-versions }}
@@ -115,14 +123,15 @@ jobs:
         run: |
           mkdir data
           ./occ maintenance:install --verbose --database=${{ matrix.databases }} --database-name=nextcloud --database-host=127.0.0.1 --database-port=$DB_PORT --database-user=root --database-pass=rootpassword --admin-user admin --admin-pass password 
-          ./occ app:enable notestutorial
+          ./occ app:enable ${{ env.APP_NAME }}
           php -S localhost:8080 &
 
       - name: PHPUnit
-        working-directory: apps/notestutorial
+        working-directory: apps/${{ env.APP_NAME }}
         run: phpunit -c phpunit.xml
+
       - name: PHPUnit integration
-        working-directory: apps/notestutorial
+        working-directory: apps/${{ env.APP_NAME }}
         run: phpunit -c phpunit.integration.xml
 
   pgsql:
@@ -136,7 +145,7 @@ jobs:
         databases: ['pgsql']
         server-versions: ['master']
   
-    name: php${{ matrix.php-versions }}/${{ matrix.databases }} on ${{ matrix.server-versions }}
+    name: php${{ matrix.php-versions }}-${{ matrix.databases }}-${{ matrix.server-versions }}
 
     services:
       postgres:
@@ -155,16 +164,18 @@ jobs:
         with:
           repository: nextcloud/server
           ref: test/debug-install
+
       - name: Checkout submodules
         shell: bash
         run: |
           auth_header="$(git config --local --get http.https://github.com/.extraheader)"
           git submodule sync --recursive
           git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive --depth=1
+
       - name: Checkout app
         uses: actions/checkout@v2
         with:
-          path: apps/notestutorial
+          path: apps/${{ env.APP_NAME }}
 
       - name: Set up php${{ matrix.php-versions }}
         uses: shivammathur/setup-php@v1
@@ -180,12 +191,13 @@ jobs:
         run: |
           mkdir data
           ./occ maintenance:install --verbose --database=${{ matrix.databases }} --database-name=nextcloud --database-host=127.0.0.1 --database-port=$DB_PORT --database-user=root --database-pass=rootpassword --admin-user admin --admin-pass password 
-          ./occ app:enable notestutorial
+          ./occ app:enable ${{ env.APP_NAME }}
           php -S localhost:8080 &
 
       - name: PHPUnit
-        working-directory: apps/notestutorial
+        working-directory: apps/${{ env.APP_NAME }}
         run: phpunit -c phpunit.xml
+
       - name: PHPUnit integration
-        working-directory: apps/notestutorial
+        working-directory: apps/${{ env.APP_NAME }}
         run: phpunit -c phpunit.integration.xml

@@ -15,14 +15,16 @@ jobs:
       matrix:
         php-versions: ['7.2', '7.3', '7.4']
   
-    name: php${{ matrix.php-versions }} lint
+    name: php${{ matrix.php-versions }}
     steps:
       - uses: actions/checkout@v2
-      - name: Set up php${{ matrix.php-versions }}
+
+      - name: Set up php ${{ matrix.php-versions }}
         uses: shivammathur/setup-php@v1
         with:
           php-version: ${{ matrix.php-versions }}
           coverage: none
+
       - name: Lint
         run: composer run lint
 
@@ -33,13 +35,17 @@ jobs:
       matrix:
         node-version: [12.x]
 
+    name: node${{ matrix.node-version }}
     steps:
       - uses: actions/checkout@v2
-      - name: Use node ${{ matrix.node-version }}
+
+      - name: Set up node ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
+
       - name: Install dependencies
         run: npm ci
-      - name: ESLint
+
+      - name: Lint
         run: npm run lint
