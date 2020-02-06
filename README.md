@@ -1,8 +1,8 @@
 # Nextcloud App Tutorial
 
-[![PHPUnit GitHub Action](https://github.com/nextcloud/app-tutorial/actions?query=workflow%3APHPUnit)](https://github.com/nextcloud/app-tutorial/workflows/PHPUnit/badge.svg)
-[![Node GitHub Action](https://github.com/nextcloud/app-tutorial/actions?query=workflow%3ANode)](https://github.com/nextcloud/app-tutorial/workflows/Node/badge.svg)
-[![Lint GitHub Action](https://github.com/nextcloud/app-tutorial/actions?query=workflow%3ALint)](https://github.com/nextcloud/app-tutorial/workflows/Lint/badge.svg)
+[![PHPUnit GitHub Action](https://github.com/nextcloud/app-tutorial/workflows/PHPUnit/badge.svg)](https://github.com/nextcloud/app-tutorial/actions?query=workflow%3APHPUnit)
+[![Node GitHub Action](https://github.com/nextcloud/app-tutorial/workflows/Node/badge.svg)](https://github.com/nextcloud/app-tutorial/actions?query=workflow%3ANode)
+[![Lint GitHub Action](https://github.com/nextcloud/app-tutorial/workflows/Lint/badge.svg)](https://github.com/nextcloud/app-tutorial/actions?query=workflow%3ALint)
 
 This is the [tutorial app](https://docs.nextcloud.com/server/latest/developer_manual/app/tutorial.html) which shows how to develop a very simple notes app.
  
