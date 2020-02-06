@@ -117,7 +117,7 @@ jobs:
           extensions: mbstring, iconv, fileinfo, intl, mysql, pdo_mysql
           coverage: none
 
-      - name: Set up nextcloud
+      - name: Set up Nextcloud
         env:
           DB_PORT: 4444
         run: |
@@ -177,7 +177,7 @@ jobs:
         with:
           path: apps/${{ env.APP_NAME }}
 
-      - name: Set up php${{ matrix.php-versions }}
+      - name: Set up php ${{ matrix.php-versions }}
         uses: shivammathur/setup-php@v1
         with:
           php-version: ${{ matrix.php-versions }}
@@ -185,7 +185,7 @@ jobs:
           extensions: mbstring, iconv, fileinfo, intl, pgsql, pdo_pgsql
           coverage: none
 
-      - name: Set up nextcloud
+      - name: Set up Nextcloud
         env:
           DB_PORT: 4444
         run: |
