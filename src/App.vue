@@ -8,7 +8,24 @@
 				button-class="icon-add"
 				@click="newNote" />
 			<ul>
-				<AppNavigationItem v-for="note in notes" :key="note.id" :item="noteEntry(note)" />
+				<AppNavigationItem v-for="note in notes"
+					:key="note.id"
+					:title="note.title ? note.title : t('notestutorial', 'New note')"
+					:class="{active: currentNoteId === note.id}"
+					@click="openNote(note)">
+					<template slot="actions">
+						<ActionButton v-if="note.id === -1"
+							icon="icon-close"
+							@click="cancelNewNote(note)">
+							{{ t('notestutorial', 'Cancel note creation') }}
+						</ActionButton>
+						<ActionButton v-else
+							icon="icon-delete"
+							@click="deleteNote(note)">
+							{{ t('notestutorial', 'Delete note') }}
+						</ActionButton>
+					</template>
+				</AppNavigationItem>
 			</ul>
 		</AppNavigation>
 		<AppContent>
@@ -33,18 +50,18 @@
 </template>
 
 <script>
-import {
-	AppContent,
-	AppNavigation,
-	AppNavigationItem,
-	AppNavigationNew,
-} from 'nextcloud-vue'
+import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
+import AppContent from '@nextcloud/vue/dist/Components/AppContent'
+import AppNavigation from '@nextcloud/vue/dist/Components/AppNavigation'
+import AppNavigationItem from '@nextcloud/vue/dist/Components/AppNavigationItem'
+import AppNavigationNew from '@nextcloud/vue/dist/Components/AppNavigationNew'
 
 import axios from '@nextcloud/axios'
 
 export default {
 	name: 'App',
 	components: {
+		ActionButton,
 		AppContent,
 		AppNavigation,
 		AppNavigationItem,
@@ -69,34 +86,7 @@ export default {
 			}
 			return this.notes.find((note) => note.id === this.currentNoteId)
 		},
-		/**
-		 * Return the item object for the sidebar entry of a note
-		 * @returns {Object}
-		 */
-		noteEntry() {
-			return (note) => {
-				return {
-					text: note.title,
-					action: () => this.openNote(note),
-					classes: this.currentNoteId === note.id ? 'active' : '',
-					utils: {
-						actions: [
-							{
-								icon: note.id === -1 ? 'icon-close' : 'icon-delete',
-								text: note.id === -1 ? t('settings', 'Cancel note creation') : t('settings', 'Delete note'),
-								action: () => {
-									if (note.id === -1) {
-										this.cancelNewNote(note)
-									} else {
-										this.deleteNote(note)
-									}
-								},
-							},
-						],
-					},
-				}
-			}
-		},
+
 		/**
 		 * Returns true if a note is selected and its title is not empty
 		 * @returns {Boolean}
@@ -118,6 +108,7 @@ export default {
 		}
 		this.loading = false
 	},
+
 	methods: {
 		/**
 		 * Create a new note and focus the note content field automatically
