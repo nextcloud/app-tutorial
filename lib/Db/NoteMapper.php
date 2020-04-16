@@ -1,4 +1,5 @@
 <?php
+
 namespace OCA\NotesTutorial\Db;
 
 use OCP\AppFramework\Db\DoesNotExistException;
@@ -8,10 +9,9 @@ use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\IDBConnection;
 
 class NoteMapper extends QBMapper {
-
-    public function __construct(IDBConnection $db) {
-        parent::__construct($db, 'notestutorial', Note::class);
-    }
+	public function __construct(IDBConnection $db) {
+		parent::__construct($db, 'notestutorial', Note::class);
+	}
 
 	/**
 	 * @param int $id
@@ -34,13 +34,12 @@ class NoteMapper extends QBMapper {
 	 * @param string $userId
 	 * @return array
 	 */
-    public function findAll(string $userId): array {
+	public function findAll(string $userId): array {
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
 		$qb->select('*')
 			->from('notestutorial')
 			->where($qb->expr()->eq('user_id', $qb->createNamedParameter($userId)));
 		return $this->findEntities($qb);
-    }
-
+	}
 }
