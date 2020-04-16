@@ -2,5 +2,5 @@
 
 namespace OCA\NotesTutorial\Service;
 
-
-class NoteNotFound extends \Exception {}
+class NoteNotFound extends \Exception {
+}
