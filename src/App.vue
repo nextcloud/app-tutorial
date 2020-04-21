@@ -219,9 +219,11 @@ export default {
 		flex-direction: column;
 		flex-grow: 1;
 	}
-	input[type="text"] {
+
+	input[type='text'] {
 		width: 100%;
 	}
+
 	textarea {
 		flex-grow: 1;
 		width: 100%;
