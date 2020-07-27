@@ -16,6 +16,6 @@
  	 * @NoCSRFRequired
  	 */
  	public function index() {
- 		return new TemplateResponse('notestutorial', 'main');
+ 		return new TemplateResponse('notestutorial', 'notestutorial-main');
  	}
  }

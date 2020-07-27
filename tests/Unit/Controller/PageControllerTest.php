@@ -18,7 +18,7 @@ class PageControllerTest extends TestCase {
 	public function testIndex() {
 		$result = $this->controller->index();
 
-		$this->assertEquals('main', $result->getTemplateName());
+		$this->assertEquals('notestutorial-main', $result->getTemplateName());
 		$this->assertTrue($result instanceof TemplateResponse);
 	}
 }
