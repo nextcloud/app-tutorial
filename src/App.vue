@@ -57,6 +57,8 @@ import AppNavigationItem from '@nextcloud/vue/dist/Components/AppNavigationItem'
 import AppNavigationNew from '@nextcloud/vue/dist/Components/AppNavigationNew'
 
 import axios from '@nextcloud/axios'
+import { showError, showSuccess } from '@nextcloud/dialogs'
+import { generateUrl } from '@nextcloud/router'
 
 export default {
 	name: 'App',
@@ -67,7 +69,7 @@ export default {
 		AppNavigationItem,
 		AppNavigationNew,
 	},
-	data: function() {
+	data() {
 		return {
 			notes: [],
 			currentNoteId: null,
@@ -100,11 +102,11 @@ export default {
 	 */
 	async mounted() {
 		try {
-			const response = await axios.get(OC.generateUrl('/apps/notestutorial/notes'))
+			const response = await axios.get(generateUrl('/apps/notestutorial/notes'))
 			this.notes = response.data
 		} catch (e) {
 			console.error(e)
-			OCP.Toast.error(t('notestutorial', 'Could not fetch notes'))
+			showError(t('notestutorial', 'Could not fetch notes'))
 		}
 		this.loading = false
 	},
@@ -166,13 +168,13 @@ export default {
 		async createNote(note) {
 			this.updating = true
 			try {
-				const response = await axios.post(OC.generateUrl(`/apps/notestutorial/notes`), note)
+				const response = await axios.post(generateUrl('/apps/notestutorial/notes'), note)
 				const index = this.notes.findIndex((match) => match.id === this.currentNoteId)
 				this.$set(this.notes, index, response.data)
 				this.currentNoteId = response.data.id
 			} catch (e) {
 				console.error(e)
-				OCP.Toast.error(t('notestutorial', 'Could not create the note'))
+				showError(t('notestutorial', 'Could not create the note'))
 			}
 			this.updating = false
 		},
@@ -183,10 +185,10 @@ export default {
 		async updateNote(note) {
 			this.updating = true
 			try {
-				await axios.put(OC.generateUrl(`/apps/notestutorial/notes/${note.id}`), note)
+				await axios.put(generateUrl(`/apps/notestutorial/notes/${note.id}`), note)
 			} catch (e) {
 				console.error(e)
-				OCP.Toast.error(t('notestutorial', 'Could not update the note'))
+				showError(t('notestutorial', 'Could not update the note'))
 			}
 			this.updating = false
 		},
@@ -196,15 +198,15 @@ export default {
 		 */
 		async deleteNote(note) {
 			try {
-				await axios.delete(OC.generateUrl(`/apps/notestutorial/notes/${note.id}`))
+				await axios.delete(generateUrl(`/apps/notestutorial/notes/${note.id}`))
 				this.notes.splice(this.notes.indexOf(note), 1)
 				if (this.currentNoteId === note.id) {
 					this.currentNoteId = null
 				}
-				OCP.Toast.success(t('notestutorial', 'Note deleted'))
+				showSuccess(t('notestutorial', 'Note deleted'))
 			} catch (e) {
 				console.error(e)
-				OCP.Toast.error(t('notestutorial', 'Could not delete the note'))
+				showError(t('notestutorial', 'Could not delete the note'))
 			}
 		},
 	},
