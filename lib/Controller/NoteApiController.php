@@ -2,11 +2,11 @@
 
 namespace OCA\NotesTutorial\Controller;
 
-use OCP\IRequest;
-use OCP\AppFramework\Http\DataResponse;
-use OCP\AppFramework\ApiController;
-
+use OCA\NotesTutorial\AppInfo\Application;
 use OCA\NotesTutorial\Service\NoteService;
+use OCP\AppFramework\ApiController;
+use OCP\AppFramework\Http\DataResponse;
+use OCP\IRequest;
 
 class NoteApiController extends ApiController {
 	/** @var NoteService */
@@ -17,11 +17,10 @@ class NoteApiController extends ApiController {
 
 	use Errors;
 
-	public function __construct($appName,
-								IRequest $request,
+	public function __construct(IRequest $request,
 								NoteService $service,
 								$userId) {
-		parent::__construct($appName, $request);
+		parent::__construct(Application::APP_ID, $request);
 		$this->service = $service;
 		$this->userId = $userId;
 	}
