@@ -1,21 +1,27 @@
 <?php
 
- namespace OCA\NotesTutorial\Controller;
+namespace OCA\NotesTutorial\Controller;
 
- use OCP\IRequest;
- use OCP\AppFramework\Http\TemplateResponse;
- use OCP\AppFramework\Controller;
+use OCA\NotesTutorial\AppInfo\Application;
+use OCP\AppFramework\Controller;
+use OCP\AppFramework\Http\TemplateResponse;
+use OCP\IRequest;
+use OCP\Util;
 
- class PageController extends Controller {
- 	public function __construct($appName, IRequest $request) {
- 		parent::__construct($appName, $request);
- 	}
+class PageController extends Controller {
+	public function __construct(IRequest $request) {
+		parent::__construct(Application::APP_ID, $request);
+	}
 
- 	/**
- 	 * @NoAdminRequired
- 	 * @NoCSRFRequired
- 	 */
- 	public function index() {
- 		return new TemplateResponse('notestutorial', 'notestutorial-main');
- 	}
- }
+	/**
+	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 *
+	 * Render default template
+	 */
+	public function index() {
+		Util::addScript(Application::APP_ID, 'notestutorial-main');
+
+		return new TemplateResponse(Application::APP_ID, 'main');
+	}
+}

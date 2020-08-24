@@ -22,9 +22,7 @@ class NoteControllerTest extends TestCase {
 		$this->service = $this->getMockBuilder(NoteService::class)
 			->disableOriginalConstructor()
 			->getMock();
-		$this->controller = new NoteController(
-			'notestutorial', $this->request, $this->service, $this->userId
-		);
+		$this->controller = new NoteController($this->request, $this->service, $this->userId);
 	}
 
 	public function testUpdate() {
