@@ -222,7 +222,7 @@ export default {
 }
 </script>
 <style scoped>
-	#app-content > div {
+	#app-content-vue > div {
 		width: 100%;
 		height: 100%;
 		padding: 20px;
