@@ -17,5 +17,5 @@ jobs:
         if: github.ref == 'refs/heads/master' &&
             (github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]')
         with:
-          target: patch
+          target: minor
           github-token: ${{ secrets.DEPENDABOT_AUTOMERGE_TOKEN }}
