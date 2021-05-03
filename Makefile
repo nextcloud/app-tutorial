@@ -41,6 +41,9 @@ build-js-production:
 watch-js:
 	npm run watch
 
+serve-js:
+	npm run serve
+
 # Linting
 lint:
 	npm run lint
