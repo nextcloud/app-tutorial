@@ -127,7 +127,7 @@ export default {
 			})
 		},
 		/**
-		 * Action tiggered when clicking the save button
+		 * Action triggered when clicking the save button
 		 * create a new note or save
 		 */
 		saveNote() {
