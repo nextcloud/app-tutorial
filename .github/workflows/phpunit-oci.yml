@@ -22,12 +22,12 @@ jobs:
       # do not stop on another job's failure
       fail-fast: false
       matrix:
-        php-versions: ['7.4']
+        php-versions: ['7.4', '8.0']
         server-versions: ['master']
-  
+
     services:
       oracle:
-        image: deepdiver/docker-oracle-xe-11g # "wnameless/oracle-xe-11g-r2"
+        image: deepdiver/docker-oracle-xe-11g # 'wnameless/oracle-xe-11g-r2'
         ports:
           - 1521:1521/tcp
 
