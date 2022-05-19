@@ -23,7 +23,7 @@ jobs:
           require: write
 
       - name: Add reaction on start
-        uses: peter-evans/create-or-update-comment@v1
+        uses: peter-evans/create-or-update-comment@v2
         with:
           token: ${{ secrets.COMMAND_BOT_PAT }}
           repository: ${{ github.event.repository.full_name }}
@@ -37,7 +37,7 @@ jobs:
       # Init path depending on which command is run
       - name: Init path
         id: git-path
-        run: |    
+        run: |
           if ${{ startsWith(steps.command.outputs.arg1, '/') }}; then
             echo "::set-output name=path::${{ github.workspace }}${{steps.command.outputs.arg1}}"
           else
@@ -47,7 +47,7 @@ jobs:
       - name: Init branch
         uses: xt0rted/pull-request-comment-branch@v1
         id: comment-branch
-    
+
   process:
     runs-on: ubuntu-latest
     needs: init
@@ -108,7 +108,7 @@ jobs:
           git push --force origin ${{ needs.init.outputs.head_ref }}
 
       - name: Add reaction on failure
-        uses: peter-evans/create-or-update-comment@v1
+        uses: peter-evans/create-or-update-comment@v2
         if: failure()
         with:
           token: ${{ secrets.COMMAND_BOT_PAT }}
