@@ -1,16 +1,20 @@
+# This workflow is provided via the organization template repository
+#
+# https://github.com/nextcloud/.github
+# https://docs.github.com/en/actions/learn-github-actions/sharing-workflows-with-your-organization
+
 name: PHPUnit
 
 on:
   pull_request:
   push:
     branches:
+      - main
       - master
       - stable*
 
 env:
-  APP_NAME: notestutorial
   # Location of the phpunit.xml and phpunit.integration.xml files
-  # Comment to disable
   PHPUNIT_CONFIG: ./tests/phpunit.xml
   PHPUNIT_INTEGRATION_CONFIG: ./tests/phpunit.integration.xml
 
@@ -19,10 +23,8 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
-      # do not stop on another job's failure
-      fail-fast: false
       matrix:
-        php-versions: ['7.4', '8.0']
+        php-versions: ['7.4', '8.0', '8.1']
         server-versions: ['master']
 
     services:
@@ -35,6 +37,11 @@ jobs:
         options: --health-cmd="mysqladmin ping" --health-interval 5s --health-timeout 2s --health-retries 5
 
     steps:
+      - name: Set app env
+        run: |
+          # Split and keep last
+          echo "APP_NAME=${GITHUB_REPOSITORY##*/}" >> $GITHUB_ENV
+
       - name: Enable ONLY_FULL_GROUP_BY MySQL option
         run: |
           echo "SET GLOBAL sql_mode=(SELECT CONCAT(@@sql_mode,',ONLY_FULL_GROUP_BY'));" | mysql -h 127.0.0.1 -P 4444 -u root -prootpassword
@@ -70,18 +77,34 @@ jobs:
         run: |
           mkdir data
           ./occ maintenance:install --verbose --database=mysql --database-name=nextcloud --database-host=127.0.0.1 --database-port=$DB_PORT --database-user=root --database-pass=rootpassword --admin-user admin --admin-pass password
-          ./occ app:enable --force ${{ env.APP_NAME }}
-          php -S localhost:8080 &
+          ./occ app:enable ${{ env.APP_NAME }}
+
+      - name: Check PHPUnit config file existence
+        id: check_phpunit
+        uses: andstor/file-existence-action@v1
+        with:
+          files: apps/${{ env.APP_NAME }}/${{ env.PHPUNIT_CONFIG }}
 
       - name: PHPUnit
         # Only run if phpunit config file exists
-        if: env.PHPUNIT_CONFIG != ''
+        if: steps.check_phpunit.outputs.files_exists == 'true'
         working-directory: apps/${{ env.APP_NAME }}
         run: ./vendor/phpunit/phpunit/phpunit -c ${{ env.PHPUNIT_CONFIG }}
 
+      - name: Check PHPUnit integration config file existence
+        id: check_integration
+        uses: andstor/file-existence-action@v1
+        with:
+          files: apps/${{ env.APP_NAME }}/${{ env.PHPUNIT_INTEGRATION_CONFIG }}
+
+      - name: Run Nextcloud
+        # Only run if phpunit integration config file exists
+        if: steps.check_integration.outputs.files_exists == 'true'
+        run: php -S localhost:8080 &
+
       - name: PHPUnit integration
         # Only run if phpunit integration config file exists
-        if: env.PHPUNIT_INTEGRATION_CONFIG != ''
+        if: steps.check_integration.outputs.files_exists == 'true'
         working-directory: apps/${{ env.APP_NAME }}
         run: ./vendor/phpunit/phpunit/phpunit -c ${{ env.PHPUNIT_INTEGRATION_CONFIG }}
 
