@@ -54,11 +54,6 @@ jobs:
           - 1521:1521/tcp
 
     steps:
-      - name: Set app env
-        run: |
-          # Split and keep last
-          echo "APP_NAME=${GITHUB_REPOSITORY##*/}" >> $GITHUB_ENV
-
       - name: Checkout server
         uses: actions/checkout@v3
         with:
