@@ -10,13 +10,15 @@ use OCP\AppFramework\Db\DoesNotExistException;
 use OCA\NotesTutorial\Db\Note;
 use OCA\NotesTutorial\Service\NoteService;
 use OCA\NotesTutorial\Db\NoteMapper;
+use PHPUnit\Framework\MockObject\MockObject;
 
 class NoteServiceTest extends TestCase {
-	private $service;
-	private $mapper;
-	private $userId = 'john';
+	private NoteService|MockObject $service;
+	private NoteMapper|MockObject $mapper;
+	private string $userId = 'john';
 
 	public function setUp(): void {
+		/** @var NoteMapper|MockObject */
 		$this->mapper = $this->getMockBuilder(NoteMapper::class)
 			->disableOriginalConstructor()
 			->getMock();
