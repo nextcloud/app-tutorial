@@ -1,18 +1,18 @@
 <template>
-	<DashboardWidget :items="items"
+	<NcDashboardWidget :items="items"
 		:empty-content-message="t('notestutorial', 'No notes created yet')"
 		empty-content-icon="icon-rename" />
 </template>
 
 <script>
-import { DashboardWidget } from '@nextcloud/vue-dashboard'
+import { NcDashboardWidget } from '@nextcloud/vue'
 import { generateUrl } from '@nextcloud/router'
 import axios from '@nextcloud/axios'
 
 export default {
 	name: 'Widget',
 	components: {
-		DashboardWidget,
+		NcDashboardWidget,
 	},
 	data() {
 		return {
@@ -37,7 +37,3 @@ export default {
 	},
 }
 </script>
-
-<style scoped>
-
-</style>

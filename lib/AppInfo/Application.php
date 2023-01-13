@@ -20,6 +20,6 @@ class Application extends App implements IBootstrap {
 	}
 
 	public function boot(IBootContext $context): void {
-		// TODO: Implement boot() method.
+		// This app does not require any boot code
 	}
 }

@@ -7,6 +7,7 @@ return [
 	],
 	'routes' => [
 		['name' => 'page#index', 'url' => '/', 'verb' => 'GET'],
+		['name' => 'page#showNote', 'url' => '/{note}', 'verb' => 'GET', 'requirements' => ['note' => '\d+']],
 		['name' => 'note_api#preflighted_cors', 'url' => '/api/0.1/{path}',
 			'verb' => 'OPTIONS', 'requirements' => ['path' => '.+']]
 	]

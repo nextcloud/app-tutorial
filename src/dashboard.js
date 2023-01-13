@@ -1,11 +1,11 @@
 import Vue from 'vue'
-import Widget from './Widget'
+import Widget from './Widget.vue'
 
 Vue.prototype.t = t
 
 document.addEventListener('DOMContentLoaded', function() {
 	OCA.Dashboard.register('notestutorial', (el) => {
-		const View = Vue.extend(Widget)
-		const vm = new View({}).$mount(el)
+		const View = Vue.extend(Widget);
+		(() => new View({}).$mount(el))()
 	})
 })
