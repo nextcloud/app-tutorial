@@ -1,34 +1,34 @@
 <template>
 	<div id="content" class="app-notestutorial">
-		<AppNavigation>
-			<AppNavigationNew v-if="!loading"
+		<NcAppNavigation>
+			<NcAppNavigationNew v-if="!loading"
 				:text="t('notestutorial', 'New note')"
 				:disabled="false"
 				button-id="new-notestutorial-button"
 				button-class="icon-add"
 				@click="newNote" />
 			<ul>
-				<AppNavigationItem v-for="note in notes"
+				<NcAppNavigationItem v-for="note in notes"
 					:key="note.id"
 					:title="note.title ? note.title : t('notestutorial', 'New note')"
 					:class="{active: currentNoteId === note.id}"
 					@click="openNote(note)">
 					<template slot="actions">
-						<ActionButton v-if="note.id === -1"
+						<NcActionButton v-if="note.id === -1"
 							icon="icon-close"
 							@click="cancelNewNote(note)">
 							{{ t('notestutorial', 'Cancel note creation') }}
-						</ActionButton>
-						<ActionButton v-else
+						</NcActionButton>
+						<NcActionButton v-else
 							icon="icon-delete"
 							@click="deleteNote(note)">
 							{{ t('notestutorial', 'Delete note') }}
-						</ActionButton>
+						</NcActionButton>
 					</template>
-				</AppNavigationItem>
+				</NcAppNavigationItem>
 			</ul>
-		</AppNavigation>
-		<AppContent>
+		</NcAppNavigation>
+		<NcAppContent>
 			<div v-if="currentNote">
 				<input ref="title"
 					v-model="currentNote.title"
@@ -45,30 +45,32 @@
 				<div class="icon-file" />
 				<h2>{{ t('notestutorial', 'Create a note to get started') }}</h2>
 			</div>
-		</AppContent>
+		</NcAppContent>
 	</div>
 </template>
 
 <script>
-import ActionButton from '@nextcloud/vue/dist/Components/ActionButton.js'
-import AppContent from '@nextcloud/vue/dist/Components/AppContent.js'
-import AppNavigation from '@nextcloud/vue/dist/Components/AppNavigation.js'
-import AppNavigationItem from '@nextcloud/vue/dist/Components/AppNavigationItem.js'
-import AppNavigationNew from '@nextcloud/vue/dist/Components/AppNavigationNew.js'
-
 import '@nextcloud/dialogs/styles/toast.scss'
+
+import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
 import { showError, showSuccess } from '@nextcloud/dialogs'
-import axios from '@nextcloud/axios'
+import {
+	NcActionButton,
+	NcAppContent,
+	NcAppNavigation,
+	NcAppNavigationItem,
+	NcAppNavigationNew
+} from '@nextcloud/vue'
 
 export default {
 	name: 'App',
 	components: {
-		ActionButton,
-		AppContent,
-		AppNavigation,
-		AppNavigationItem,
-		AppNavigationNew,
+		NcActionButton,
+		NcAppContent,
+		NcAppNavigation,
+		NcAppNavigationItem,
+		NcAppNavigationNew,
 	},
 	data() {
 		return {
