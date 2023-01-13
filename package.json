@@ -1,7 +1,7 @@
 {
   "name": "notestutorial",
   "description": "A simple Nextcloud app tutorial for building a notes app",
-  "version": "19.0.0",
+  "version": "20.0.0",
   "author": "Julius Härtl <jus@bitgrid.net",
   "contributors": [
     "John Molakvoæ <skjnldsv@protonmail.com>"
