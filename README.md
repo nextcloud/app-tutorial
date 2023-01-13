@@ -11,13 +11,15 @@ To install it change into your Nextcloud's apps directory:
 
     cd nextcloud/apps
 
-Then run:
+Then clone this repository into a folder named **notestutorial**¹:
 
     git clone https://github.com/nextcloud/app-tutorial.git notestutorial
 
 Then install the dependencies using:
 
     make composer
+
+¹ It is important that the directory is named exactly like the app ID (see `appinfo/info.xml`).
 
 ## Frontend development
 
