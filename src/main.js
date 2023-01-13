@@ -20,16 +20,20 @@
  *
  */
 import { generateFilePath } from '@nextcloud/router'
+import { loadState } from '@nextcloud/initial-state'
 
 import Vue from 'vue'
 import App from './App.vue'
 
-// eslint-disable-next-line
+// eslint-disable-next-line no-undef,camelcase
 __webpack_public_path__ = generateFilePath(appName, '', 'js/')
 
 Vue.mixin({ methods: { t, n } })
 
+// Load initial state data
+const initialNote = loadState(appName, 'initialNote', null)
+
 export default new Vue({
 	el: '#content',
-	render: h => h(App),
+	render: h => h(App, { props: { initialNote } }),
 })

@@ -60,7 +60,7 @@ import {
 	NcAppContent,
 	NcAppNavigation,
 	NcAppNavigationItem,
-	NcAppNavigationNew
+	NcAppNavigationNew,
 } from '@nextcloud/vue'
 
 export default {
@@ -71,6 +71,13 @@ export default {
 		NcAppNavigation,
 		NcAppNavigationItem,
 		NcAppNavigationNew,
+	},
+	props: {
+		initialNote: {
+			type: Object,
+			required: false,
+			default: null,
+		},
 	},
 	data() {
 		return {
@@ -87,7 +94,7 @@ export default {
 		 * @return {object | null}
 		 */
 		currentNote() {
-			if (this.currentNoteId === null) {
+			if (this.currentNoteId === null || this.notes.length === 0) {
 				return null
 			}
 			return this.notes.find((note) => note.id === this.currentNoteId)
@@ -106,6 +113,11 @@ export default {
 	 * Fetch list of notes when the component is loaded
 	 */
 	async mounted() {
+		if (this.initialNote) {
+			this.notes = [this.initialNote]
+			this.currentNoteId = this.initialNote.id
+			this.updating = true
+		}
 		try {
 			const response = await axios.get(generateUrl('/apps/notestutorial/notes'))
 			this.notes = response.data
@@ -114,6 +126,7 @@ export default {
 			showError(t('notestutorial', 'Could not fetch notes'))
 		}
 		this.loading = false
+		this.updating = false
 	},
 
 	methods: {
@@ -130,6 +143,14 @@ export default {
 			this.$nextTick(() => {
 				this.$refs.content.focus()
 			})
+			// Change window URL if it includes the note ID
+			if (!window.location.pathname.match(/\/\d+$/)) return
+			window.history.replaceState(
+				{},
+				document.title,
+				// Replace ID of previous note with the new note ID
+				[...window.location.pathname.split('/').slice(0, -1), note.id].join('/')
+			)
 		},
 		/**
 		 * Action tiggered when clicking the save button
