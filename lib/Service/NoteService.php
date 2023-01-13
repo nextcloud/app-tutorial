@@ -11,7 +11,6 @@ use OCA\NotesTutorial\Db\Note;
 use OCA\NotesTutorial\Db\NoteMapper;
 
 class NoteService {
-
 	/** @var NoteMapper */
 	private $mapper;
 
