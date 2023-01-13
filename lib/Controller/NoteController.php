@@ -18,8 +18,8 @@ class NoteController extends Controller {
 	use Errors;
 
 	public function __construct(IRequest $request,
-								NoteService $service,
-								$userId) {
+		NoteService $service,
+		$userId) {
 		parent::__construct(Application::APP_ID, $request);
 		$this->service = $service;
 		$this->userId = $userId;
@@ -53,7 +53,7 @@ class NoteController extends Controller {
 	 * @NoAdminRequired
 	 */
 	public function update(int $id, string $title,
-						   string $content): DataResponse {
+		string $content): DataResponse {
 		return $this->handleNotFound(function () use ($id, $title, $content) {
 			return $this->service->update($id, $title, $content, $this->userId);
 		});
