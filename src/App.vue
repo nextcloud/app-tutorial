@@ -60,7 +60,7 @@ import {
 	NcAppContent,
 	NcAppNavigation,
 	NcAppNavigationItem,
-	NcAppNavigationNew
+	NcAppNavigationNew,
 } from '@nextcloud/vue'
 
 export default {
