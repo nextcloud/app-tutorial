@@ -30,7 +30,7 @@
     "@nextcloud/axios": "^2.3.0",
     "@nextcloud/dialogs": "^3.2.0",
     "@nextcloud/router": "^2.1.1",
-    "@nextcloud/vue": "^7.4.0",
+    "@nextcloud/vue": "^8.30.0",
     "vue": "^2.7.14"
   },
   "browserslist": [
