@@ -17,6 +17,9 @@ concurrency:
   group: phpunit-pgsql-${{ github.head_ref || github.run_id }}
   cancel-in-progress: true
 
+env:
+  APP_NAME: notestutorial
+
 jobs:
   matrix:
     runs-on: ubuntu-latest-low
