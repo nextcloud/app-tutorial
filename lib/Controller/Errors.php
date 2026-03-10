@@ -4,10 +4,10 @@ namespace OCA\NotesTutorial\Controller;
 
 use Closure;
 
-use OCP\AppFramework\Http;
-use OCP\AppFramework\Http\DataResponse;
-
 use OCA\NotesTutorial\Service\NoteNotFound;
+use OCP\AppFramework\Http;
+
+use OCP\AppFramework\Http\DataResponse;
 
 trait Errors {
 	protected function handleNotFound(Closure $callback): DataResponse {

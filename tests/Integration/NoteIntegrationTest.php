@@ -2,14 +2,14 @@
 
 namespace OCA\NotesTutorial\Tests\Integration\Controller;
 
+use OCA\NotesTutorial\Controller\NoteController;
+use OCA\NotesTutorial\Db\Note;
+use OCA\NotesTutorial\Db\NoteMapper;
+
+
 use OCP\AppFramework\App;
 use OCP\IRequest;
 use PHPUnit\Framework\TestCase;
-
-
-use OCA\NotesTutorial\Db\Note;
-use OCA\NotesTutorial\Db\NoteMapper;
-use OCA\NotesTutorial\Controller\NoteController;
 
 class NoteIntegrationTest extends TestCase {
 	private $controller;

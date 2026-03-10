@@ -2,9 +2,9 @@
 
 namespace OCA\NotesTutorial\Controller;
 
-use PHPUnit\Framework\TestCase;
-
 use OCP\AppFramework\Http\TemplateResponse;
+
+use PHPUnit\Framework\TestCase;
 
 class PageControllerTest extends TestCase {
 	private $controller;

@@ -1,0 +1,7 @@
+{
+    "require-dev": {
+        "psalm/phar": "^6.16",
+        "nextcloud/ocp": "dev-master",
+        "friendsofphp/php-cs-fixer": "^3.94"
+    }
+}
