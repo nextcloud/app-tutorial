@@ -1,0 +1,17 @@
+{
+	"extends": "@vue/tsconfig/tsconfig.dom.json",
+	"compilerOptions": {
+		"target": "ESNext",
+		"module": "ESNext",
+		"moduleResolution": "bundler",
+		"strict": true,
+		"jsx": "preserve",
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"esModuleInterop": true,
+		"skipLibCheck": true,
+		"types": ["@nextcloud/typings"]
+	},
+	"include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue"],
+	"exclude": ["node_modules"]
+}
