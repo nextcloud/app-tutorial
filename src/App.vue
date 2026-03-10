@@ -5,15 +5,14 @@
 				:text="t('notestutorial', 'New note')"
 				:disabled="false"
 				button-id="new-notestutorial-button"
-				button-class="icon-add"
 				@click="newNote" />
 			<ul>
 				<NcAppNavigationItem v-for="note in notes"
 					:key="note.id"
-					:title="note.title ? note.title : t('notestutorial', 'New note')"
+					:name="note.title ? note.title : t('notestutorial', 'New note')"
 					:class="{active: currentNoteId === note.id}"
 					@click="openNote(note)">
-					<template slot="actions">
+					<template #actions>
 						<NcActionButton v-if="note.id === -1"
 							icon="icon-close"
 							@click="cancelNewNote(note)">
@@ -49,10 +48,10 @@
 	</div>
 </template>
 
-<script>
-import '@nextcloud/dialogs/styles/toast.scss'
-
+<script setup lang="ts">
+import { computed, nextTick, onMounted, ref, useTemplateRef } from 'vue'
 import axios from '@nextcloud/axios'
+import { t } from '@nextcloud/l10n'
 import { generateUrl } from '@nextcloud/router'
 import { showError, showSuccess } from '@nextcloud/dialogs'
 import {
@@ -63,163 +62,117 @@ import {
 	NcAppNavigationNew,
 } from '@nextcloud/vue'
 
-export default {
-	name: 'App',
-	components: {
-		NcActionButton,
-		NcAppContent,
-		NcAppNavigation,
-		NcAppNavigationItem,
-		NcAppNavigationNew,
-	},
-	data() {
-		return {
-			notes: [],
-			currentNoteId: null,
-			updating: false,
-			loading: true,
-		}
-	},
-	computed: {
-		/**
-		 * Return the currently selected note object
-		 *
-		 * @return {object | null}
-		 */
-		currentNote() {
-			if (this.currentNoteId === null) {
-				return null
-			}
-			return this.notes.find((note) => note.id === this.currentNoteId)
-		},
-
-		/**
-		 * Returns true if a note is selected and its title is not empty
-		 *
-		 * @return {boolean}
-		 */
-		savePossible() {
-			return this.currentNote && this.currentNote.title !== ''
-		},
-	},
-	/**
-	 * Fetch list of notes when the component is loaded
-	 */
-	async mounted() {
-		try {
-			const response = await axios.get(generateUrl('/apps/notestutorial/notes'))
-			this.notes = response.data
-		} catch (e) {
-			console.error(e)
-			showError(t('notestutorial', 'Could not fetch notes'))
-		}
-		this.loading = false
-	},
-
-	methods: {
-		/**
-		 * Create a new note and focus the note content field automatically
-		 *
-		 * @param {object} note Note object
-		 */
-		openNote(note) {
-			if (this.updating) {
-				return
-			}
-			this.currentNoteId = note.id
-			this.$nextTick(() => {
-				this.$refs.content.focus()
-			})
-		},
-		/**
-		 * Action tiggered when clicking the save button
-		 * create a new note or save
-		 */
-		saveNote() {
-			if (this.currentNoteId === -1) {
-				this.createNote(this.currentNote)
-			} else {
-				this.updateNote(this.currentNote)
-			}
-		},
-		/**
-		 * Create a new note and focus the note content field automatically
-		 * The note is not yet saved, therefore an id of -1 is used until it
-		 * has been persisted in the backend
-		 */
-		newNote() {
-			if (this.currentNoteId !== -1) {
-				this.currentNoteId = -1
-				this.notes.push({
-					id: -1,
-					title: '',
-					content: '',
-				})
-				this.$nextTick(() => {
-					this.$refs.title.focus()
-				})
-			}
-		},
-		/**
-		 * Abort creating a new note
-		 */
-		cancelNewNote() {
-			this.notes.splice(this.notes.findIndex((note) => note.id === -1), 1)
-			this.currentNoteId = null
-		},
-		/**
-		 * Create a new note by sending the information to the server
-		 *
-		 * @param {object} note Note object
-		 */
-		async createNote(note) {
-			this.updating = true
-			try {
-				const response = await axios.post(generateUrl('/apps/notestutorial/notes'), note)
-				const index = this.notes.findIndex((match) => match.id === this.currentNoteId)
-				this.$set(this.notes, index, response.data)
-				this.currentNoteId = response.data.id
-			} catch (e) {
-				console.error(e)
-				showError(t('notestutorial', 'Could not create the note'))
-			}
-			this.updating = false
-		},
-		/**
-		 * Update an existing note on the server
-		 *
-		 * @param {object} note Note object
-		 */
-		async updateNote(note) {
-			this.updating = true
-			try {
-				await axios.put(generateUrl(`/apps/notestutorial/notes/${note.id}`), note)
-			} catch (e) {
-				console.error(e)
-				showError(t('notestutorial', 'Could not update the note'))
-			}
-			this.updating = false
-		},
-		/**
-		 * Delete a note, remove it from the frontend and show a hint
-		 *
-		 * @param {object} note Note object
-		 */
-		async deleteNote(note) {
-			try {
-				await axios.delete(generateUrl(`/apps/notestutorial/notes/${note.id}`))
-				this.notes.splice(this.notes.indexOf(note), 1)
-				if (this.currentNoteId === note.id) {
-					this.currentNoteId = null
-				}
-				showSuccess(t('notestutorial', 'Note deleted'))
-			} catch (e) {
-				console.error(e)
-				showError(t('notestutorial', 'Could not delete the note'))
-			}
-		},
-	},
+interface Note {
+	id: number
+	title: string
+	content: string
 }
+
+const titleRef = useTemplateRef<HTMLInputElement>('title')
+const contentRef = useTemplateRef<HTMLTextAreaElement>('content')
+
+const notes = ref<Note[]>([])
+const currentNoteId = ref<number | null>(null)
+const updating = ref(false)
+const loading = ref(true)
+
+const currentNote = computed(() => {
+	if (currentNoteId.value === null) {
+		return undefined
+	}
+	return notes.value.find((note) => note.id === currentNoteId.value)
+})
+
+const savePossible = computed(() => {
+	return !!currentNote.value && currentNote.value.title !== ''
+})
+
+function openNote(note: Note) {
+	if (updating.value) {
+		return
+	}
+	currentNoteId.value = note.id
+	nextTick(() => {
+		contentRef.value?.focus()
+	})
+}
+
+function saveNote() {
+	if (currentNoteId.value === -1) {
+		createNote(currentNote.value!)
+	} else {
+		updateNote(currentNote.value!)
+	}
+}
+
+function newNote() {
+	if (currentNoteId.value !== -1) {
+		currentNoteId.value = -1
+		notes.value.push({
+			id: -1,
+			title: '',
+			content: '',
+		})
+		nextTick(() => {
+			titleRef.value?.focus()
+		})
+	}
+}
+
+function cancelNewNote() {
+	notes.value.splice(notes.value.findIndex((note) => note.id === -1), 1)
+	currentNoteId.value = null
+}
+
+async function createNote(note: Note) {
+	updating.value = true
+	try {
+		const response = await axios.post<Note>(generateUrl('/apps/notestutorial/notes'), note)
+		const index = notes.value.findIndex((match) => match.id === currentNoteId.value)
+		notes.value[index] = response.data
+		currentNoteId.value = response.data.id
+	} catch (e) {
+		console.error(e)
+		showError(t('notestutorial', 'Could not create the note'))
+	}
+	updating.value = false
+}
+
+async function updateNote(note: Note) {
+	updating.value = true
+	try {
+		await axios.put(generateUrl(`/apps/notestutorial/notes/${note.id}`), note)
+	} catch (e) {
+		console.error(e)
+		showError(t('notestutorial', 'Could not update the note'))
+	}
+	updating.value = false
+}
+
+async function deleteNote(note: Note) {
+	try {
+		await axios.delete(generateUrl(`/apps/notestutorial/notes/${note.id}`))
+		notes.value.splice(notes.value.indexOf(note), 1)
+		if (currentNoteId.value === note.id) {
+			currentNoteId.value = null
+		}
+		showSuccess(t('notestutorial', 'Note deleted'))
+	} catch (e) {
+		console.error(e)
+		showError(t('notestutorial', 'Could not delete the note'))
+	}
+}
+
+onMounted(async () => {
+	try {
+		const response = await axios.get<Note[]>(generateUrl('/apps/notestutorial/notes'))
+		notes.value = response.data
+	} catch (e) {
+		console.error(e)
+		showError(t('notestutorial', 'Could not fetch notes'))
+	}
+	loading.value = false
+})
 </script>
 <style scoped>
 	#app-content > div {

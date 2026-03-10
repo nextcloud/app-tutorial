@@ -2,7 +2,7 @@
   "name": "notestutorial",
   "description": "A simple Nextcloud app tutorial for building a notes app",
   "version": "20.0.0",
-  "author": "Julius Härtl <jus@bitgrid.net",
+  "author": "Julius Härtl <jus@bitgrid.net>",
   "contributors": [
     "John Molakvoæ <skjnldsv@protonmail.com>"
   ],
@@ -14,24 +14,25 @@
     "type": "git"
   },
   "homepage": "https://github.com/nextcloud/app-tutorial",
-  "license": "agpl",
+  "license": "AGPL-3.0-or-later",
   "private": true,
+  "type": "module",
   "scripts": {
-    "build": "webpack --node-env production --progress",
-    "dev": "webpack --node-env development --progress",
-    "watch": "webpack --node-env development --progress --watch",
-    "serve": "webpack --node-env development serve --progress",
-    "lint": "eslint --ext .js,.vue src",
-    "lint:fix": "eslint --ext .js,.vue src --fix",
+    "build": "vite --mode production build",
+    "dev": "vite --mode development build",
+    "watch": "vite --mode development build --watch",
+    "lint": "eslint src",
+    "lint:fix": "eslint --fix src",
     "stylelint": "stylelint css/*.css css/*.scss src/**/*.scss src/**/*.vue",
     "stylelint:fix": "stylelint css/*.css css/*.scss src/**/*.scss src/**/*.vue --fix"
   },
   "dependencies": {
-    "@nextcloud/axios": "^2.3.0",
-    "@nextcloud/dialogs": "^3.2.0",
-    "@nextcloud/router": "^2.1.1",
-    "@nextcloud/vue": "^7.4.0",
-    "vue": "^2.7.14"
+    "@nextcloud/axios": "^2.5.2",
+    "@nextcloud/dialogs": "^7.3.0",
+    "@nextcloud/l10n": "^3.4.1",
+    "@nextcloud/router": "^3.1.0",
+    "@nextcloud/vue": "^9.5.0",
+    "vue": "^3.5.21"
   },
   "browserslist": [
     "extends @nextcloud/browserslist-config"
@@ -41,10 +42,14 @@
     "npm": "^11.3.0"
   },
   "devDependencies": {
-    "@nextcloud/babel-config": "^1.0.0",
-    "@nextcloud/browserslist-config": "^2.3.0",
-    "@nextcloud/eslint-config": "^8.2.1",
-    "@nextcloud/stylelint-config": "^2.3.0",
-    "@nextcloud/webpack-vue-config": "^5.4.0"
+    "@nextcloud/browserslist-config": "^3.1.2",
+    "@nextcloud/eslint-config": "^9.0.0-rc.8",
+    "@nextcloud/stylelint-config": "^3.2.1",
+    "@nextcloud/typings": "^1.10.0",
+    "@nextcloud/vite-config": "^2.5.2",
+    "@vue/tsconfig": "^0.9.0",
+    "typescript": "^5.8.2",
+    "vite": "^7.3.1",
+    "vue-tsc": "^3.2.5"
   }
 }

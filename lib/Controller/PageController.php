@@ -21,6 +21,7 @@ class PageController extends Controller {
 	 */
 	public function index() {
 		Util::addScript(Application::APP_ID, 'notestutorial-main');
+		Util::addStyle(Application::APP_ID, 'notestutorial-main');
 
 		return new TemplateResponse(Application::APP_ID, 'main');
 	}
