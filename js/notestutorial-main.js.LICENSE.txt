@@ -65,7 +65,7 @@
 
 /*! @license DOMPurify 3.3.2 | (c) Cure53 and other contributors | Released under the Apache license 2.0 and Mozilla Public License 2.0 | github.com/cure53/DOMPurify/blob/3.3.2/LICENSE */
 
-/*! Axios v1.13.3 Copyright (c) 2026 Matt Zabriskie and contributors */
+/*! Axios v1.13.6 Copyright (c) 2026 Matt Zabriskie and contributors */
 
 /*! For license information please see index.module.js.LICENSE.txt */
 
