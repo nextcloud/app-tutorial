@@ -4,11 +4,11 @@ namespace OCA\NotesTutorial\Service;
 
 use Exception;
 
-use OCP\AppFramework\Db\DoesNotExistException;
-use OCP\AppFramework\Db\MultipleObjectsReturnedException;
-
 use OCA\NotesTutorial\Db\Note;
 use OCA\NotesTutorial\Db\NoteMapper;
+
+use OCP\AppFramework\Db\DoesNotExistException;
+use OCP\AppFramework\Db\MultipleObjectsReturnedException;
 
 class NoteService {
 	/** @var NoteMapper */

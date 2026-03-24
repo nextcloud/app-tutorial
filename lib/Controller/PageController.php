@@ -20,7 +20,8 @@ class PageController extends Controller {
 	 * Render default template
 	 */
 	public function index() {
-		Util::addScript(Application::APP_ID, 'notestutorial-main');
+		Util::addScript(Application::APP_ID, Application::APP_ID . '-main');
+		Util::addStyle(Application::APP_ID, Application::APP_ID . '-main');
 
 		return new TemplateResponse(Application::APP_ID, 'main');
 	}

@@ -2,14 +2,14 @@
 
 namespace OCA\NotesTutorial\Tests\Unit\Controller;
 
-use PHPUnit\Framework\TestCase;
-
-use OCP\AppFramework\Http;
-use OCP\IRequest;
+use OCA\NotesTutorial\Controller\NoteController;
 
 use OCA\NotesTutorial\Service\NoteNotFound;
 use OCA\NotesTutorial\Service\NoteService;
-use OCA\NotesTutorial\Controller\NoteController;
+
+use OCP\AppFramework\Http;
+use OCP\IRequest;
+use PHPUnit\Framework\TestCase;
 
 class NoteControllerTest extends TestCase {
 	protected $controller;
