@@ -1,6 +1,6 @@
 # Nextcloud App Tutorial
 
-[![PHPUnit GitHub Action](https://github.com/nextcloud/app-tutorial/workflows/PHPUnit/badge.svg)](https://github.com/nextcloud/app-tutorial/actions?query=workflow%3APHPUnit)
+[![PHPUnit GitHub Action](https://github.com/nextcloud/app-tutorial/workflows/PHPUnit%20MariaDB/badge.svg)](https://github.com/nextcloud/app-tutorial/actions?query=workflow%3APHPUnit%20MariaDB)
 [![Node GitHub Action](https://github.com/nextcloud/app-tutorial/workflows/Node/badge.svg)](https://github.com/nextcloud/app-tutorial/actions?query=workflow%3ANode)
 [![Lint GitHub Action](https://github.com/nextcloud/app-tutorial/workflows/Lint/badge.svg)](https://github.com/nextcloud/app-tutorial/actions?query=workflow%3ALint)
 
