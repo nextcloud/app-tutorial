@@ -105,7 +105,7 @@ This file is generated from multiple sources. Included packages:
 	- version: 14.2.1
 	- license: MIT
 - axios
-	- version: 1.13.6
+	- version: 1.15.0
 	- license: MIT
 - date-fns
 	- version: 4.1.0
